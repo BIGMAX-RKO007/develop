@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <project xmlns="http://maven.apache.org/POM/4.0.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+            <modelVersion>4.0.0</modelVersion>
+
+            <groupId>com.flink</groupId>
+            <artifactId>flink-elasticsearch-demo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+
+            <properties>
+                <java.version>1.8</java.version>
+                <flink.version>1.8.0</flink.version>
+            </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-core</artifactId>
+                    <version>1.8.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-clients_2.11</artifactId>
+                    <version>1.8.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-java</artifactId>
+                    <version>1.8.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-streaming-java_2.11</artifactId>
+                    <version>1.8.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-connector-elasticsearch6_2.11</artifactId>
+                    <version>1.8.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>fastjson</artifactId>
+                    <version>1.2.56</version>
+                </dependency>
+
+                <!-- flink JDBC  clilkhouse -->
+                <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-connector-jdbc_2.11</artifactId>
+                    <version>1.12.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>ru.yandex.clickhouse</groupId>
+                    <artifactId>clickhouse-jdbc</artifactId>
+                    <version>0.1.54</version>
+                </dependency>
+
+                <!-- flink连接器-->
+                <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-connector-kafka_2.12</artifactId>
+                    <version>${flink.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-sql-connector-kafka_2.12</artifactId>
+                    <version>${flink.version}</version>
+                </dependency>
+                <!--<dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-connector-jdbc_2.12</artifactId>
+                    <version>${flink.version}</version>
+                </dependency>-->
+                <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-csv</artifactId>
+                    <version>${flink.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-json</artifactId>
+                    <version>${flink.version}</version>
+                </dependency>
+                <!--<dependency>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                    <version>1.18.16</version>
+                    <scope>compile</scope>
+                </dependency>-->
+                <dependency>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                    <version>1.18.16</version>
+                    <scope>compile</scope>
+                </dependency>
+
+                <!-- hbase开发环境 start-->
+                <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-hbase_2.11</artifactId>
+                    <version>${flink.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.hbase</groupId>
+                    <artifactId>hbase-client</artifactId>
+                    <version>2.1.5</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.phoenix</groupId>
+                    <artifactId>phoenix-core</artifactId>
+                    <version>5.0.0-HBase-2.0</version>
+                </dependency>
+                <!-- hadoop开发环境 start-->
+                <dependency>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-common</artifactId>
+                    <version>2.7.3</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-hdfs</artifactId>
+                    <version>2.7.3</version>
+                    <!-- 除去hadoop-hdfs包中xml-apis的 -->
+                    <exclusions>
+                        <exclusion>
+                            <groupId>xml-apis</groupId>
+                            <artifactId>xml-apis</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-client</artifactId>
+                    <version>2.7.3</version>
+                </dependency>
+
+
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>8</source>
+                            <target>8</target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </project>
+
