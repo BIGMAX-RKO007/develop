@@ -14,6 +14,7 @@ import org.apache.flink.streaming.connectors.elasticsearch.RequestIndexer;
 import org.apache.flink.streaming.connectors.elasticsearch6.ElasticsearchSink;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.Requests;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -2,6 +2,7 @@ package com.flink.kafka;
 
 //import cn.itcast.connectors.ckSink;
 //import org.apache.flink.api.common.RuntimeExecutionMode;
+
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.java.tuple.Tuple4;
@@ -20,7 +21,7 @@ import java.util.Properties;
  * Author itcast
  * Desc 演示Flink-Connectors-KafkaComsumer/Source
  */
-public class FinkKafkaConsumer {
+public class readkafka {
     public static void main(String[] args) throws Exception {
         //TODO 0.env
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -29,14 +30,14 @@ public class FinkKafkaConsumer {
         //TODO 1.source
         //准备kafka连接参数
         Properties props = new Properties();
-        props.setProperty("bootstrap.servers","10.10.41.169:6667");//集群地址
-        props.setProperty("group.id","flink_kafka");//消费者组id
+        props.setProperty("bootstrap.servers", "39.96.136.60:9092");//集群地址
+        props.setProperty("group.id", "flink21");//消费者组id
         //props.setProperty("auto.offset.reset","latest");//latest有offset记录从记录位置开始消费,没有记录从最新的/最后的消息开始消费 /earliest有offset记录从记录位置开始消费,没有记录从最早的/最开始的消息开始消费
         //props.setProperty("flink.partition-discovery.interval-millis", "5000");//会开启一个后台线程每隔5s检测一下Kafka的分区情况,实现动态分区检测
         //props.setProperty("enable.auto.commit", "true");//自动提交(提交到默认主题,后续学习了Checkpoint后随着Checkpoint存储在Checkpoint和默认主题中)
         //props.setProperty("auto.commit.interval.ms", "2000");//自动提交的时间间隔
         //使用连接参数创建FlinkKafkaConsumer/kafkaSource
-        FlinkKafkaConsumer<String> kafkaSource = new FlinkKafkaConsumer<String>("t1703", new SimpleStringSchema(), props);
+        FlinkKafkaConsumer<String> kafkaSource = new FlinkKafkaConsumer<String>("da_trace", new SimpleStringSchema(), props);
         //使用kafkaSource
         DataStream<String> kafkaDS = env.addSource(kafkaSource);
         kafkaDS.print();
@@ -81,24 +82,26 @@ public class FinkKafkaConsumer {
         @Override
         public void close() throws Exception {
             super.close();
-            if (preparedStatement != null){
+            if (preparedStatement != null) {
                 preparedStatement.close();
             }
         }
 
         @Override
         public void invoke(Tuple4<Integer, Integer, Float, String> value, Context context) throws Exception {
-        try {
-            int oderid = value.f0;
-            int userid = value.f1;
-            float price = value.f2;
-            String creattime = value.f3;
-            preparedStatement.setInt(1, oderid);
-            preparedStatement.setInt(2, userid);
-            preparedStatement.setFloat(3, price);
-            preparedStatement.setString(4, creattime);
-            preparedStatement.executeUpdate();
-        }catch (Exception e){e.printStackTrace();}
+            try {
+                int oderid = value.f0;
+                int userid = value.f1;
+                float price = value.f2;
+                String creattime = value.f3;
+                preparedStatement.setInt(1, oderid);
+                preparedStatement.setInt(2, userid);
+                preparedStatement.setFloat(3, price);
+                preparedStatement.setString(4, creattime);
+                preparedStatement.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
 

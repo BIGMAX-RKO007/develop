@@ -1,11 +1,10 @@
-package com.flink.testes;
+package com.flink.kafka;
 
 //import org.apache.flink.api.common.RuntimeExecutionMode;
 
 import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.api.common.serialization.SerializationSchema;
-import org.apache.flink.api.common.serialization.SimpleStringEncoder;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
+import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -16,24 +15,25 @@ import org.apache.flink.util.Collector;
 import java.util.Properties;
 import java.util.Random;
 
-public class FlinkRandomsinkKafka {
+public class FlinksinkKafka {
 
     public static void main(String[] args) throws Exception {
         //创建flink环境
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         //env.setRuntimeMode(RuntimeExecutionMode.AUTOMATIC);
         //source数据源
-        DataStreamSource<Oder> streamSource = env.addSource(new odersource()).setParallelism(2);
-        //Transformation
+        DataStream<String> streamSource = env.readTextFile("data/input/words1.txt");
+        //DataStreamSource<Oder> streamSource = env.addSource(new odersource()).setParallelism(2);
+        //Transformation   new FlatMapFunction<Oder, String>()
         /*SingleOutputStreamOperator<String> flatMap = streamSource.flatMap(new FlatMapFunction<Oder, String>() {
             @Override
-            public void flatMap(Oder s, Collector<String> collector) throws Exception {
-                String id = String.valueOf(s.id);
-                String userId = String.valueOf(s.userId);
-                String money = String.valueOf(s.money);
-                String createTime = s.createTime;
-                String oder = id +"," +userId+"," + money+"," + createTime;
-                collector.collect(oder);
+            public void flatMap(Oder oder, Collector<String> collector) throws Exception {
+                String id = String.valueOf(oder.id);
+                String userId = String.valueOf(oder.userId);
+                String money = String.valueOf(oder.money);
+                String createTime = oder.createTime;
+                String oder1 = id + "," + userId + "," + money + "," + createTime;
+                collector.collect(oder1);
             }
         });*/
          /*SingleOutputStreamOperator<Oder> filter = streamSource.filter(new FilterFunction<Oder>() {
@@ -59,14 +59,11 @@ public class FlinkRandomsinkKafka {
 
         //sink kafka
         streamSource.print();
+
         Properties props2 = new Properties();
-        props2.setProperty("bootstrap.servers", "node1:9092");
-        FlinkKafkaProducer<Oder> kafkaSink = new FlinkKafkaProducer<Oder>("t1703", new SerializationSchema<Oder>() {
-            @Override
-            public byte[] serialize(Oder oder) {
-                return new byte[0];
-            }
-        }, props2);
+        props2.setProperty("bootstrap.servers", "dcyw1:9092");
+        FlinkKafkaProducer<String> kafkaSink = new FlinkKafkaProducer<>("springboot", new SimpleStringSchema(), props2);
+
         streamSource.addSink(kafkaSink);
 
         /*Properties props2 = new Properties();
@@ -141,7 +138,7 @@ public class FlinkRandomsinkKafka {
         public void run(SourceContext<Oder> sourceContext) throws Exception {
             Random random = new Random();
             while (flag) {
-                Thread.sleep(5000);
+                Thread.sleep(1000);
                 int id = random.nextInt(100);
                 int userid = random.nextInt(3);
                 float money = random.nextInt(1000);
@@ -152,6 +149,7 @@ public class FlinkRandomsinkKafka {
                 o.money = money;
                 o.createTime = createTime;
                 sourceContext.collect(o);
+                //sourceContext.collect(o);
                 //sourceContext.collect(new Oder (id,userid,money,createTime));
             }
         }

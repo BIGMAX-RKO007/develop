@@ -9,24 +9,24 @@ import java.util.Random;
 
 public class SendEMMSFlume {
 
-	public static void main(String[] args) {
-		try {
+    public static void main(String[] args) {
+        try {
 //模拟发送数据到9998端口，然后用集群flume读取！
-			Socket s = new Socket();
-			s.connect(new InetSocketAddress("10.10.41.169", 9999), 2000);
-			new Thread(() -> {
-				try {
-					OutputStream out = s.getOutputStream();
-					short[] short1 = new short[1000];
-					for (int ii = 0; ii < 1000; ii++) {
-						short1[ii] = nextSort();
-					}
-					byte[] short2Bytes = short2Bytes(short1);
-					while (true) {
-						long currentTimeMillis = System.currentTimeMillis();
-						//发送迹线数据
-						String line = "trace|" + currentTimeMillis + "|169|100|300|0.015750|97|0|-1|" + 1000
-								+ "|0|NoBack|0|2020-04-14-trace|e67ff4026e2c5374|short|[";
+            Socket s = new Socket();
+            s.connect(new InetSocketAddress("10.10.41.251", 9993), 2000);
+            new Thread(() -> {
+                try {
+                    OutputStream out = s.getOutputStream();
+                    short[] short1 = new short[1000];
+                    for (int ii = 0; ii < 1000; ii++) {
+                        short1[ii] = nextSort();
+                    }
+                    byte[] short2Bytes = short2Bytes(short1);
+                    while (true) {
+                        long currentTimeMillis = System.currentTimeMillis();
+                        //发送迹线数据
+                        String line = "trace|" + currentTimeMillis + "|169|100|300|0.015750|97|0|-1|" + 1000
+                                + "|0|NoBack|0|2020-04-14-trace|e67ff4026e2c5374|short|[";
 //						String line = "EMMS|00|SingalList|1631170279475|2|0|49|2021-09-09-SingalList
 //						|sssaa[1631170279475,1631169999533,88.846875, 0.433125, 20.90, 11.0, 0, 0
 //						#1631170279475,1631169999533,89.9925, 0.210000, 27.50, 11.0, 0, 0
@@ -77,93 +77,93 @@ public class SendEMMSFlume {
 //						#1631170279475,1631170054788,2338.246206, 2.654991, 35.60, 312.0, 0, 0
 //						#1631170279475,1631170048751,5807.482601, 13.874967, 24.30, 39.0, 0, 0
 //						#1631170279475,1631170070169,2479.980733, 1.079996, 25.60, 40.0, 0, 0";
-					    System.out.println(line.getBytes().length+short2Bytes.length+16);
-						out.write(line.getBytes());
-						out.write(short2Bytes);
-						out.write((new byte[] { (byte) 255, (byte) 255, (byte) 255, (byte) 252, (byte) 255, (byte) 255,
-								(byte) 255, (byte) 252, (byte) 255, (byte) 255, (byte) 255, (byte) 252, (byte) 255,
-								(byte) 255, (byte) 255, (byte) 252 }));
-						out.flush();
-						System.out.println(line.getBytes().length+short2Bytes.length+16);
-					Thread.sleep(5000);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}).start();
-			new Thread(() -> {
-				try {
-					InputStream in = s.getInputStream();
-					while (true) {
-						if (in.available() <= 0) {
-							continue;
-						}
-						byte[] bytes = new byte[1024];
-						int len = 0;
-						while ((len = in.read(bytes)) > 0) {
-							System.out.println("客户端：" + new String(bytes));
-						}
-						Thread.sleep(2000);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+                        System.out.println(line.getBytes().length + short2Bytes.length + 16);
+                        out.write(line.getBytes());
+                        out.write(short2Bytes);
+                        out.write((new byte[]{(byte) 255, (byte) 255, (byte) 255, (byte) 252, (byte) 255, (byte) 255,
+                                (byte) 255, (byte) 252, (byte) 255, (byte) 255, (byte) 255, (byte) 252, (byte) 255,
+                                (byte) 255, (byte) 255, (byte) 252}));
+                        out.flush();
+                        System.out.println(line.getBytes().length + short2Bytes.length + 16);
+                        Thread.sleep(5000);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            new Thread(() -> {
+                try {
+                    InputStream in = s.getInputStream();
+                    while (true) {
+                        if (in.available() <= 0) {
+                            continue;
+                        }
+                        byte[] bytes = new byte[1024];
+                        int len = 0;
+                        while ((len = in.read(bytes)) > 0) {
+                            System.out.println("客户端：" + new String(bytes));
+                        }
+                        Thread.sleep(2000);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-			}).start();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	}
+    }
 
-	/**
-	 * 将字节数组前2字节转换为short整型数值
-	 * 
-	 * @param bytes
-	 * @return
-	 */
-	public static short getShort(byte[] bytes) {
-		return (short) ((0xff00 & (bytes[0] << 8)) | (0xff & bytes[1]));
-	}
+    /**
+     * 将字节数组前2字节转换为short整型数值
+     *
+     * @param bytes
+     * @return
+     */
+    public static short getShort(byte[] bytes) {
+        return (short) ((0xff00 & (bytes[0] << 8)) | (0xff & bytes[1]));
+    }
 
-	/**
-	 * 将short整型数值转换为字节数组
-	 * 
-	 * @param data
-	 * @return
-	 */
-	public static byte[] getBytes(short data) {
-		byte[] bytes = new byte[2];
-		bytes[0] = (byte) ((data & 0xff00) >> 8);
-		bytes[1] = (byte) (data & 0xff);
-		return bytes;
-	}
+    /**
+     * 将short整型数值转换为字节数组
+     *
+     * @param data
+     * @return
+     */
+    public static byte[] getBytes(short data) {
+        byte[] bytes = new byte[2];
+        bytes[0] = (byte) ((data & 0xff00) >> 8);
+        bytes[1] = (byte) (data & 0xff);
+        return bytes;
+    }
 
-	public static byte[] short2Bytes(short[] data) {
-		byte[] byteRet = new byte[2 * data.length];
+    public static byte[] short2Bytes(short[] data) {
+        byte[] byteRet = new byte[2 * data.length];
 
-		for (int i = 0; i < data.length; i++) {
-			byteRet[2 * i] = (byte) ((data[i] & 0xff00) >> 8);
-			byteRet[2 * i + 1] = (byte) (data[i] & 0xff);
-		}
-		return byteRet;
-	}
+        for (int i = 0; i < data.length; i++) {
+            byteRet[2 * i] = (byte) ((data[i] & 0xff00) >> 8);
+            byteRet[2 * i + 1] = (byte) (data[i] & 0xff);
+        }
+        return byteRet;
+    }
 
-	public static byte[] double2Bytes(double[] d) {
-		byte[] byteRet = new byte[8 * d.length];
-		for (int j = 0; j < d.length; j++) {
-			long value = Double.doubleToRawLongBits(d[j]);
-			for (int i = 0; i < 8; i++) {
-				byteRet[8 * j + i] = (byte) ((value >> 8 * i) & 0xff);
-			}
-		}
-		return byteRet;
-	}
-	
-	
-	public static Short nextSort() {
-		double result = ((100) * new Random().nextDouble());
-		DecimalFormat df = new DecimalFormat("#");
-		return Short.valueOf(df.format(result));
-	}
+    public static byte[] double2Bytes(double[] d) {
+        byte[] byteRet = new byte[8 * d.length];
+        for (int j = 0; j < d.length; j++) {
+            long value = Double.doubleToRawLongBits(d[j]);
+            for (int i = 0; i < 8; i++) {
+                byteRet[8 * j + i] = (byte) ((value >> 8 * i) & 0xff);
+            }
+        }
+        return byteRet;
+    }
+
+
+    public static Short nextSort() {
+        double result = ((100) * new Random().nextDouble());
+        DecimalFormat df = new DecimalFormat("#");
+        return Short.valueOf(df.format(result));
+    }
 }

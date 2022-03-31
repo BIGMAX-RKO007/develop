@@ -7,6 +7,7 @@ import java.util.Properties;
 public class PropertiesConstants {
 
     public static String PROPERTIES_FILE_NAME = "";
+
     static {
         Properties properties = new Properties();
         InputStream in = PropertiesConstants.class.getClassLoader().getResourceAsStream("config/application.properties");
@@ -34,7 +35,6 @@ public class PropertiesConstants {
     public static final String TASKNAME = "taskName";
     public static final String GROUPID = "groupId";
     public static final String ISES = "isES";
-
 
 
     /**
@@ -117,7 +117,7 @@ public class PropertiesConstants {
     public static final String REDIS_MAXTOTAL = "fenc.redis.maxtotal";
 
     /**
-     *   告警 fix 参数
+     * 告警 fix 参数
      */
     public static final String FIX_FTP_IP = "fenc.fix.ftp.ip";
     public static final String FIX_FTP_PORT = "fenc.fix.ftp.port";

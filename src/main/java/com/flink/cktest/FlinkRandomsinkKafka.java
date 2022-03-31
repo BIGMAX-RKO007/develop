@@ -1,6 +1,7 @@
 package com.flink.cktest;
 
 //import org.apache.flink.api.common.RuntimeExecutionMode;
+
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
@@ -29,7 +30,7 @@ public class FlinkRandomsinkKafka {
                 String userId = String.valueOf(oder.userId);
                 String money = String.valueOf(oder.money);
                 String createTime = oder.createTime;
-                String oder1 = id +"," +userId+"," + money+"," + createTime;
+                String oder1 = id + "," + userId + "," + money + "," + createTime;
                 collector.collect(oder1);
             }
         });
@@ -56,9 +57,11 @@ public class FlinkRandomsinkKafka {
 
         //sink kafka
         flatMap.print();
+
         Properties props2 = new Properties();
-        props2.setProperty("bootstrap.servers", "node1:9092");
-        FlinkKafkaProducer<String> kafkaSink = new FlinkKafkaProducer<>("t1703", new SimpleStringSchema(), props2);
+        props2.setProperty("bootstrap.servers", "192.168.88.136:6667");
+        FlinkKafkaProducer<String> kafkaSink = new FlinkKafkaProducer<>("20220123", new SimpleStringSchema(), props2);
+
         flatMap.addSink(kafkaSink);
 
         /*Properties props2 = new Properties();
@@ -69,7 +72,8 @@ public class FlinkRandomsinkKafka {
         //execute
         env.execute();
     }
-    public static class Oder{
+
+    public static class Oder {
         private int id;
         private Integer userId;
         private float money;
@@ -127,17 +131,18 @@ public class FlinkRandomsinkKafka {
 
     private static class odersource extends RichParallelSourceFunction<Oder> {
         private Boolean flag = true;
+
         @Override
         public void run(SourceContext<Oder> sourceContext) throws Exception {
             Random random = new Random();
-            while (flag){
-                Thread.sleep(5000);
+            while (flag) {
+                Thread.sleep(1000);
                 int id = random.nextInt(100);
                 int userid = random.nextInt(3);
                 float money = random.nextInt(1000);
                 String createTime = String.valueOf(System.currentTimeMillis());
                 Oder o = new Oder();
-                o.id= id;
+                o.id = id;
                 o.userId = userid;
                 o.money = money;
                 o.createTime = createTime;

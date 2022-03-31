@@ -1,160 +1,234 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <project xmlns="http://maven.apache.org/POM/4.0.0"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-            <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-            <groupId>com.flink</groupId>
-            <artifactId>flink-elasticsearch-demo</artifactId>
-            <version>1.0-SNAPSHOT</version>
-
-            <properties>
-                <java.version>1.8</java.version>
-                <flink.version>1.8.0</flink.version>
-            </properties>
-
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-core</artifactId>
-                    <version>1.8.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-clients_2.11</artifactId>
-                    <version>1.8.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-java</artifactId>
-                    <version>1.8.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-streaming-java_2.11</artifactId>
-                    <version>1.8.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-connector-elasticsearch6_2.11</artifactId>
-                    <version>1.8.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>fastjson</artifactId>
-                    <version>1.2.56</version>
-                </dependency>
-
-                <!-- flink JDBC  clilkhouse -->
-                <dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-connector-jdbc_2.11</artifactId>
-                    <version>1.12.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>ru.yandex.clickhouse</groupId>
-                    <artifactId>clickhouse-jdbc</artifactId>
-                    <version>0.1.54</version>
-                </dependency>
-
-                <!-- flink连接器-->
-                <dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-connector-kafka_2.12</artifactId>
-                    <version>${flink.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-sql-connector-kafka_2.12</artifactId>
-                    <version>${flink.version}</version>
-                </dependency>
-                <!--<dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-connector-jdbc_2.12</artifactId>
-                    <version>${flink.version}</version>
-                </dependency>-->
-                <dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-csv</artifactId>
-                    <version>${flink.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-json</artifactId>
-                    <version>${flink.version}</version>
-                </dependency>
-                <!--<dependency>
-                    <groupId>org.projectlombok</groupId>
-                    <artifactId>lombok</artifactId>
-                    <version>1.18.16</version>
-                    <scope>compile</scope>
-                </dependency>-->
-                <dependency>
-                    <groupId>org.projectlombok</groupId>
-                    <artifactId>lombok</artifactId>
-                    <version>1.18.16</version>
-                    <scope>compile</scope>
-                </dependency>
-
-                <!-- hbase开发环境 start-->
-                <dependency>
-                    <groupId>org.apache.flink</groupId>
-                    <artifactId>flink-hbase_2.11</artifactId>
-                    <version>${flink.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.hbase</groupId>
-                    <artifactId>hbase-client</artifactId>
-                    <version>2.1.5</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.phoenix</groupId>
-                    <artifactId>phoenix-core</artifactId>
-                    <version>5.0.0-HBase-2.0</version>
-                </dependency>
-                <!-- hadoop开发环境 start-->
-                <dependency>
-                    <groupId>org.apache.hadoop</groupId>
-                    <artifactId>hadoop-common</artifactId>
-                    <version>2.7.3</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.hadoop</groupId>
-                    <artifactId>hadoop-hdfs</artifactId>
-                    <version>2.7.3</version>
-                    <!-- 除去hadoop-hdfs包中xml-apis的 -->
-                    <exclusions>
-                        <exclusion>
-                            <groupId>xml-apis</groupId>
-                            <artifactId>xml-apis</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.hadoop</groupId>
-                    <artifactId>hadoop-client</artifactId>
-                    <version>2.7.3</version>
-                </dependency>
+    <groupId>com.flink</groupId>
+    <artifactId>flink-elasticsearch-demo</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>mr</module>
+    </modules>
 
 
-            </dependencies>
+    <properties>
+        <java.version>1.8</java.version>
+        <flink.version>1.8.0</flink.version>
+    </properties>
 
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-core</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-clients_2.11</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-java</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-streaming-java_2.11</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-elasticsearch6_2.11</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.56</version>
+        </dependency>
+
+        <!-- flink JDBC  clilkhouse -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-jdbc_2.11</artifactId>
+            <version>1.12.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>0.1.54</version>
+        </dependency>
+
+        <!-- flink连接器-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-kafka_2.12</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-sql-connector-kafka_2.12</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-jdbc_2.12</artifactId>
+            <version>${flink.version}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-csv</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-json</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
+            <scope>compile</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- hbase开发环境 start-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-hbase_2.11</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>2.1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.phoenix</groupId>
+            <artifactId>phoenix-core</artifactId>
+            <version>5.0.0-HBase-2.0</version>
+        </dependency>
+        <!-- hadoop开发环境 start-->
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>2.7.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-hdfs</artifactId>
+            <version>2.7.3</version>
+            <!-- 除去hadoop-hdfs包中xml-apis的 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>2.7.3</version>
+        </dependency>
+        <!--rabbitmq java 客户端-->
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>5.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-core</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.38</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.3.4</version>
+        </dependency>
+
+
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <plugins>
+            <!-- 编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <!--<encoding>${project.build.sourceEncoding}</encoding>-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    <useFile>false</useFile>
+                    <disableXmlReport>true</disableXmlReport>
+                    <includes>
+                        <include>**/*Test.*</include>
+                        <include>**/*Suite.*</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <!-- 打包插件(会包含所有依赖) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
                         <configuration>
-                            <source>8</source>
-                            <target>8</target>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <!--
+                                        zip -d learn_spark.jar META-INF/*.RSA META-INF/*.DSA META-INF/*.SF -->
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <!-- 设置jar包的入口类(可选) -->
+                                    <mainClass></mainClass>
+                                </transformer>
+                            </transformers>
                         </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
-        </project>
+</project>
 

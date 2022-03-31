@@ -1,6 +1,7 @@
 package com.flink.flinktask;
 
 //import cn.hutool.core.util.IdUtil;
+
 import com.flink.flinktask.PropertiesConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.java.utils.ParameterTool;
@@ -47,13 +48,14 @@ public class testExecutionEnvUtil {
         try {
             String propertiesFileName = PropertiesConstants.PROPERTIES_FILE_NAME;
             InputStream in = testExecutionEnvUtil.class.getClassLoader().getResourceAsStream(propertiesFileName);
-            return  ParameterTool.fromPropertiesFile(in);
+            return ParameterTool.fromPropertiesFile(in);
         } catch (Exception e) {
             log.error("获取ParameterTool全局参数异常");
         }
         return ParameterTool.fromSystemProperties();
     }
-    public static void main (String[] args ){
+
+    public static void main(String[] args) {
         ParameterTool parameterTool = createParameterTool();
         System.out.println(11);
     }
@@ -146,7 +148,8 @@ public class testExecutionEnvUtil {
         cfg = cfg1.mergeWith(paramsDatax);
         return cfg;
     }
+
     public static ParameterTool getParameterTool() throws IOException {
-        return  testExecutionEnvUtil.createParameterTool();
+        return testExecutionEnvUtil.createParameterTool();
     }
 }

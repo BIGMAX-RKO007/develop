@@ -2,6 +2,7 @@ package com.flink.flinktask;
 
 //import cn.itcast.streaming.utils.ConfigLoader;
 //import com.google.inject.internal.util.$FinalizablePhantomReference;
+
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.stream.Stream;
+
 public class Bsaktask {
     /**
      * 定义所有task作业的父类，在父类中实现公共的代码
@@ -49,9 +51,10 @@ public class Bsaktask {
 
         /**
          * TODO 1）flink任务的初始化方法
+         *
          * @return
          */
-        public static StreamExecutionEnvironment getEnv(String className){
+        public static StreamExecutionEnvironment getEnv(String className) {
             System.setProperty("HADOOP_USER_NAME", "root");
             //设置全局的参数（使用的时候可以直接用法：getRuntimeContext()）
             env.getConfig().setGlobalJobParameters(parameterTool);
@@ -62,13 +65,13 @@ public class Bsaktask {
 
             //todo 3）开启checkpoint
             //  3.1：设置每隔30s周期性开启checkpoint
-            env.enableCheckpointing(30*1000);
+            env.enableCheckpointing(30 * 1000);
             //  3.2：设置检查点的model、exactly-once、保证数据一次性语义
             env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
             //  3.3：设置两次checkpoint的时间间隔，避免两次间隔太近导致频繁的checkpoint，而出现业务处理能力下降
             env.getCheckpointConfig().setMinPauseBetweenCheckpoints(20 * 1000);
             //  3.4：设置checkpoint的超时时间
-            env.getCheckpointConfig().setCheckpointTimeout(20*1000);
+            env.getCheckpointConfig().setCheckpointTimeout(20 * 1000);
             //  3.5：设置checkpoint的最大尝试次数，同一个时间有几个checkpoint在运行
             env.getCheckpointConfig().setMaxConcurrentCheckpoints(1);
             //  3.6：设置checkpoint取消的时候，是否保留checkpoint，checkpoint默认会在job取消的时候删除checkpoint
@@ -93,6 +96,7 @@ public class Bsaktask {
 
         /**
          * TODO 2）flink接入kafka数据源消费数据
+         *
          * @param clazz
          * @param <T>
          * @return
@@ -103,14 +107,14 @@ public class Bsaktask {
             // 5.1：设置kafka的集群地址
             props.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, parameterTool.getRequired("bootstrap.servers"));
             // 5.2：设置消费者组id
-            props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, parameterTool.getRequired("kafka.group.id")+appName);
+            props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, parameterTool.getRequired("kafka.group.id") + appName);
             // 5.3：设置kafka的分区感知（动态感知）
             props.setProperty("flink.partition-discovery.interval-millis", "30000");
             // 5.4：设置key和value的反序列化（可选）
             // 5.5：设置是否自动递交offset
             props.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, parameterTool.get("enable.auto.reset", "earliest"));
             // 5.6：创建kafka的消费者实例
-            FlinkKafkaConsumer<T> kafkaConsumer011= new FlinkKafkaConsumer<T>(
+            FlinkKafkaConsumer<T> kafkaConsumer011 = new FlinkKafkaConsumer<T>(
                     parameterTool.getRequired("kafka.topic"),
                     clazz.newInstance(),
                     props

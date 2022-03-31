@@ -1,7 +1,6 @@
 package com.flink.domain;
 
 
-
 public class tracelocal {
     private String event_type;
     private int data_timestamp;

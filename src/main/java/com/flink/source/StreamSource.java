@@ -3,8 +3,11 @@ package com.flink.source;
 import com.flink.domain.Address;
 import com.flink.domain.Customer;
 import org.apache.flink.streaming.api.functions.source.ParallelSourceFunction;
+
 import java.util.Date;
 import java.util.Random;
+
+import static com.oracle.jrockit.jfr.ContentType.Address;
 
 /**
  * 自定义的流式并行数据源
@@ -17,18 +20,18 @@ public class StreamSource implements ParallelSourceFunction<Customer> {
     private Random random = new Random();
     private Long id = 1L;
 
-    public  void init() {
+    public void init() {
         names[0] = "刘备";
         names[1] = "关羽";
         names[2] = "张飞";
         names[3] = "曹操";
         names[4] = "诸葛亮";
 
-        addresses[0]= new Address(1, "湖北省", "武汉市");
-        addresses[1]= new Address(2, "湖北省", "黄冈市");
-        addresses[2]= new Address(3, "广东省", "广州市");
-        addresses[3]= new Address(4, "广东省", "深圳市");
-        addresses[4]= new Address(5, "浙江省", "杭州市");
+        addresses[0] = new Address(1, "湖北省", "武汉市");
+        addresses[1] = new Address(2, "湖北省", "黄冈市");
+        addresses[2] = new Address(3, "广东省", "广州市");
+        addresses[3] = new Address(4, "广东省", "深圳市");
+        addresses[4] = new Address(5, "浙江省", "杭州市");
     }
 
     /**
@@ -37,7 +40,7 @@ public class StreamSource implements ParallelSourceFunction<Customer> {
     @Override
     public void run(SourceContext sourceContext) throws Exception {
         init();
-        while(isRunning) {
+        while (isRunning) {
             int nameIndex = random.nextInt(5);
             int addressIndex = random.nextInt(5);
 
