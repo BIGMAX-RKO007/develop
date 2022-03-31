@@ -1,0 +1,25 @@
+click house创建数据库
+CREATE DATABASE IF NOT EXISTS tutorial
+创建mysql数据表到clickhouse
+CREATE TABLE tmp ENGINE = MergeTree ORDER BY id AS SELECT * FROM mysql('127.0.0.1:3306','shop_itheima','user','root','123456');
+shell创建mysql数据表到clickhouse
+clickhouse-client --query "CREATE TABLE tmp ENGINE = MergeTree ORDER BY id AS SELECT * FROM mysql('127.0.0.1:3306','shop_itheima','user','root','123456');"
+shell 删除clickhouse 数据表
+clickhouse-client --query "drop table bigdata.tmp"
+
+创建副本表
+CREATE TABLE default.t_order_rep2
+(
+    `id` UInt32,
+    `sku_id` String,
+    `total_amount` Decimal(16,
+ 2),
+    `create_time` DateTime
+)	     #定义副本表引擎	
+ENGINE = ReplicatedMergeTree('/clickhouse/table/01/t_order_rep',
+ 'rep_103')
+PARTITION BY toYYYYMMDD(create_time)
+PRIMARY KEY id
+ORDER BY (id,
+ sku_id)
+SETTINGS index_granularity = 8192
