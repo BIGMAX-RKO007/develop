@@ -17,8 +17,8 @@ public class uploader {
 // Create a minioClient with the MinIO server playground, its access keyand secret key.
                     MinioClient minioClient =
                     MinioClient.builder()
-                            .endpoint("http://10.10.41.242:9090")
-                            .credentials("minioadmin", "minioadmin")
+                            .endpoint("http://10.10.41.243:9090")
+                            .credentials("adminminio", "admin123456")
                             .build();
 // 创建bucket
             String bucketName = "jpg";
@@ -33,7 +33,7 @@ public class uploader {
                     UploadObjectArgs.builder()
                             .bucket(bucketName)
                             .object("微信图.png")
-                            .filename("D:\\test.txt")
+                            .filename("D:\\微信图.png")
                             .build());
             System.out.println("上传文件成功");
         } catch (MinioException e) {
