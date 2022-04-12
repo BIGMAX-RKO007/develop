@@ -17,8 +17,8 @@ public class uploader {
 // Create a minioClient with the MinIO server playground, its access keyand secret key.
                     MinioClient minioClient =
                     MinioClient.builder()
-                            .endpoint("http://10.10.41.243:9090")
-                            .credentials("adminminio", "admin123456")
+                            .endpoint("http://10.10.41.242:9090")
+                            .credentials("minioadmin", "minioadmin")
                             .build();
 // 创建bucket
             String bucketName = "jpg";
