@@ -290,6 +290,36 @@ sudo /etc/init.d/clickhouse-server start
 clickhouse-client
 客户端:端口默认9000
 sudo vim /etc/clickhouse-server/config.xml
+配置集群：
+<ckcluster>
+        <shard>
+             <internal_replication>true</internal_replication>
+            <replica>
+                <host>iienode1</host>
+                <port>19000</port>
+                <user>default</user>
+                <password>123456</password>
+            </replica>
+        </shard>
+        <shard>
+            <replica>
+                <internal_replication>true</internal_replication>
+                <host>iienode2</host>
+                <port>19000</port>
+                <user>default</user>
+                <password>123456</password>
+            </replica>
+        </shard>
+        <shard>
+            <internal_replication>true</internal_replication>
+            <replica>
+                <host>iienode3</host>
+                <port>19000</port>
+                <user>default</user>
+                <password>123456</password>
+            </replica>
+</shard>
+    </ckcluster>
 搜索/zookeeper
 <zookeeper>
         <node>
