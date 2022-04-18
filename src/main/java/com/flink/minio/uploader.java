@@ -17,11 +17,11 @@ public class uploader {
 // Create a minioClient with the MinIO server playground, its access keyand secret key.
                     MinioClient minioClient =
                     MinioClient.builder()
-                            .endpoint("http://10.10.41.242:9090")
-                            .credentials("minioadmin", "minioadmin")
+                            .endpoint("http://10.10.41.251:9090")
+                            .credentials("adminminio", "admin123456")
                             .build();
 // 创建bucket
-            String bucketName = "jpg";
+            String bucketName = "flinkstreamfilesink";
             boolean exists =
                     minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
             if (!exists) {
