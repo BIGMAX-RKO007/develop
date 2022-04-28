@@ -11,8 +11,8 @@ public class socket {
 
         public static void main(String args[]) throws Exception {
             //为了简单起见，所有的异常都直接往外抛
-            String host = "10.10.41.242";  //要连接的服务端IP地址
-            int port = 9990;   //要连接的服务端对应的监听端口
+            String host = "192.168.110.245";  //要连接的服务端IP地址192.168.110.245
+            int port = 20182;   //要连接的服务端对应的监听端口
             //与服务端建立连接
             Socket client = new Socket(host, port);
             //建立连接后就可以往服务端写数据了

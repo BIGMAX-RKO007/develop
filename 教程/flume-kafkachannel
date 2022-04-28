@@ -1,3 +1,4 @@
+自定义sink
 tier4.sources  =  r1
 tier4.channels  =  c1
 
@@ -14,3 +15,33 @@ tier4.channels.c1.parseAsFlumeEvent = false
 tier4.channels.c1.kafka.producer.max.request.size = 704857600
 
 tier4.sources.r1.channels  =  c1
+
+
+共用版sink
+
+a1.sources = r1
+a1.sinks = k1
+a1.channels = c1
+
+# Describe/configure the source
+a1.sources.r1.type = netcat
+a1.sources.r1.bind = 192.168.110.245
+a1.sources.r1.port = 20181
+a1.sources.r1.max-line-length = 102400
+
+# Describe the sink
+a1.sinks.k1.type = org.apache.flume.sink.kafka.KafkaSink
+a1.sinks.k1.kafka.bootstrap.servers= 192.168.110.214:9092,192.168.110.245:9092,192.168.110.40:9092
+a1.sinks.k1.kafka.topic=pcap
+a1.sinks.k1.serializer.class=kafka.serializer.StringEncoder
+a1.sinks.k1.kafka.producer.acks=1
+a1.sinks.k1.custom.encoding=UTF-8
+
+# Use a channel which buffers events in memory
+a1.channels.c1.type = memory
+a1.channels.c1.capacity = 1000
+a1.channels.c1.transactionCapacity = 100
+
+# Bind the source and sink to the channel
+a1.sources.r1.channels = c1
+a1.sinks.k1.channel = c1

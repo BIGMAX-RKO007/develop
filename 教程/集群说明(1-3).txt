@@ -33,6 +33,8 @@ node1
 flume
 启动命令：
 bin/flume-ng agent --conf conf/ --name a1 --conf-file job/tracesource.conf -Dflume.root.logger=INFO,console
+bin/flume-ng agent --conf conf/pacp.properties --name tier4 -Dflume.root.logger=INFO,console
+bin/flume-ng agent --conf conf/ --name tier4 --conf-file job/pcap.conf -Dflume.root.logger=INFO,console
 
 169启动：
 
@@ -262,6 +264,8 @@ hadoop fs -rm /input/sqoop/pwd/itcastmysql.pwd
 flume启动命令
 bin/flume-ng agent -c ./conf -f ./conf/spool-hdfs.conf -n a1 -Dflume.root.logger=INFO,console
 
+bin/flume-ng agent -c ./conf -f ./conf/spool-hdfs.conf -n a1 -Dflume.root.logger=INFO,console
+
 阿兹卡班启动命令
 
 cd azkaban-solo-server-0.1.0-SNAPSHOT/     目录下
@@ -327,6 +331,8 @@ topic生产者
 bin/kafka-console-producer.sh --broker-list node1.itcast.cn:9092 --topic test
 消费topic
 bin/kafka-console-consumer.sh --bootstrap-server node1.itcast.cn:9092 --topic t1703 --from-beginning
+
+bin/kafka-topics.sh --create --partitions 3 --replication-factor 2 --topic pcap --zookeeper iiebigdata0:2181,iiebigdata1:2181,iiebigdata2:2181
 
 空参实参setget
     @Data
