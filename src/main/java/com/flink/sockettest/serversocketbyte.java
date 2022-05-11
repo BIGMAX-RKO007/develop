@@ -1,14 +1,10 @@
 package com.flink.sockettest;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class serversocket {
+public class serversocketbyte {
 
         public static void main(String args[]) throws IOException {
             //为了简单起见，所有的异常信息都往外抛
@@ -48,7 +44,12 @@ public class serversocket {
              * @throws Exception
              */
             private void handleSocket() throws Exception {
-                BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "GBK"));
+                InputStream inputStream = socket.getInputStream();
+
+                byte[] bytes = new byte[4];
+                inputStream.read(bytes);
+
+                /*BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "GBK"));
                 StringBuilder sb = new StringBuilder();
                 String temp;
                 int index;
@@ -59,15 +60,15 @@ public class serversocket {
                         break;
                     }
                     sb.append(temp);
-                }
-                System.out.println("客户端: " + sb);
+                }*/
+                //System.out.println("客户端: " + sb);
                 //读完后写一句
                 Writer writer = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
                 writer.write("你好，客户端。");
                 writer.write("eof\n");
                 writer.flush();
                 writer.close();
-                br.close();
+                //br.close();
                 socket.close();
             }
         }

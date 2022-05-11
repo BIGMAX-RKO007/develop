@@ -11,7 +11,7 @@ public class socket {
 
         public static void main(String args[]) throws Exception {
             //为了简单起见，所有的异常都直接往外抛
-            String host = "192.168.110.245";  //要连接的服务端IP地址192.168.110.245
+            String host = "127.0.0.1";  //要连接的服务端IP地址192.168.110.245
             int port = 20182;   //要连接的服务端对应的监听端口
             //与服务端建立连接
             Socket client = new Socket(host, port);
@@ -19,9 +19,11 @@ public class socket {
             Writer writer = new OutputStreamWriter(client.getOutputStream(), "GBK");
             while (true) {
                 //writer.write("你好，服务端。");
+                writer.write("你好 服务端。\n");
+
                 //writer.write("eof\n");
 //                writer.write("111111111\n");
-                writer.write("{\"messageProtocolVersion\":\"1\",\"messageDeviceTypeId\":1,\"messageProductId\":0,\"messageDeviceDescribe\":\"0\",\"messageEmbeddedSoftwareVersion\":\"0\",\"messageChipVersion\":\"0\",\"messageDeviceSerialId\":\"JAJX01710001C100\",\"messagePackageId\":0,\"messageLoadLength\":0,\"messageNumber\":1,\"messageSplitSerialId\":0,\"verifyCode\":0,\"reserved\":0,\"basicMessageBasicList\":[{\"srcMac\":\"11-22-33-aa-44-55\",\"destMac\":\"10-20-30-40-50-60\",\"srcIp\":\"10.10.10.100\",\"destIp\":\"10.10.10.110\",\"srcPort\":8080,\"destPort\":8090,\"protocolType\":0,\"byteNumber\":-31395,\"packageNumber\":21773,\"verifyMessageBodyType\":1,\"verifyTypeId\":101,\"loadLength\":31,\"verifyFunctionModuleCode\":0}],\"tempVerifyCode\":0,\"messageSplit\":false}\n");
+                //writer.write("{\"messageProtocolVersion\":\"1\",\"messageDeviceTypeId\":1,\"messageProductId\":0,\"messageDeviceDescribe\":\"0\",\"messageEmbeddedSoftwareVersion\":\"0\",\"messageChipVersion\":\"0\",\"messageDeviceSerialId\":\"JAJX01710001C100\",\"messagePackageId\":0,\"messageLoadLength\":0,\"messageNumber\":1,\"messageSplitSerialId\":0,\"verifyCode\":0,\"reserved\":0,\"basicMessageBasicList\":[{\"srcMac\":\"11-22-33-aa-44-55\",\"destMac\":\"10-20-30-40-50-60\",\"srcIp\":\"10.10.10.100\",\"destIp\":\"10.10.10.110\",\"srcPort\":8080,\"destPort\":8090,\"protocolType\":0,\"byteNumber\":-31395,\"packageNumber\":21773,\"verifyMessageBodyType\":1,\"verifyTypeId\":101,\"loadLength\":31,\"verifyFunctionModuleCode\":0}],\"tempVerifyCode\":0,\"messageSplit\":false}\n");
                 //{"messageProtocolVersion":"0","messageDeviceTypeId":0,"messageProductId":0,"messageDeviceDescribe":"0","messageEmbeddedSoftwareVersion":"0","messageChipVersion":"0","messageDeviceSerialId":"JAJX01710001C100","messagePackageId":0,"messageLoadLength":0,"messageNumber":1,"messageSplitSerialId":0,"verifyCode":0,"reserved":0,"basicMessageBasicList":[{"srcMac":"11-22-33-aa-44-55","destMac":"10-20-30-40-50-60","srcIp":"10.10.10.100","destIp":"10.10.10.110","srcPort":8080,"destPort":8090,"protocolType":0,"byteNumber":-31395,"packageNumber":21773,"verifyMessageBodyType":1,"verifyTypeId":101,"loadLength":31,"verifyFunctionModuleCode":0}],"tempVerifyCode":0,"messageSplit":false}
                 //writer.write("{\"messageProtocolVersion\":0\"\",\"messageDeviceTypeId\":0,\"messageProductId\":0,\"messageDeviceDescribe\":\"\",\"messageEmbeddedSoftwareVersion\":\"\",\"messageChipVersion\":\"\",\"messageDeviceSerialId\":\"JAJX01710001C100\",\"messagePackageId\":0,\"messageLoadLength\":0,\"messageNumber\":1,\"messageSplitSerialId\":0,\"verifyCode\":0,\"reserved\":0,\"basicMessageBasicList\":[{\"destMac\":\"10-20-30-40-50-60\",\"srcIp\":\"10.10.10.100\",\"destIp\":\"10.10.10.110\",\"srcPort\":8080,\"destPort\":8090,\"protocolType\":0,\"byteNumber\":-31395,\"packageNumber\":21773,\"verifyMessageBodyType\":1,\"verifyTypeId\":101,\"loadLength\":31,\"verifyFunctionModuleCode\":0}],\"tempVerifyCode\":0,\"messageSplit\":false}\n");
                 //"srcMac":"11-22-33-aa-44-55",

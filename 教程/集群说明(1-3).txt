@@ -35,6 +35,7 @@ flume
 bin/flume-ng agent --conf conf/ --name a1 --conf-file job/tracesource.conf -Dflume.root.logger=INFO,console
 bin/flume-ng agent --conf conf/pacp.properties --name tier4 -Dflume.root.logger=INFO,console
 bin/flume-ng agent --conf conf/ --name tier4 --conf-file job/pcap.conf -Dflume.root.logger=INFO,console
+bin/flume-ng agent -c conf -f conf/pcap-kafka.conf -n a1  -Dflume.root.logger=INFO,console
 
 169启动：
 
