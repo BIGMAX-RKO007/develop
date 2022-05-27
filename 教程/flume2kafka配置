@@ -25,13 +25,13 @@ a1.channels = c1
 
 # Describe/configure the source
 a1.sources.r1.type = netcat
-a1.sources.r1.bind = 192.168.110.245
+a1.sources.r1.bind = 192.168.88.161
 a1.sources.r1.port = 20181
 a1.sources.r1.max-line-length = 102400
 
 # Describe the sink
 a1.sinks.k1.type = org.apache.flume.sink.kafka.KafkaSink
-a1.sinks.k1.kafka.bootstrap.servers= 192.168.110.214:9092,192.168.110.245:9092,192.168.110.40:9092
+a1.sinks.k1.kafka.bootstrap.servers= 192.168.88.161:9092,192.168.88.162:9092,192.168.88.163:9092
 a1.sinks.k1.kafka.topic=pcap
 a1.sinks.k1.serializer.class=kafka.serializer.StringEncoder
 a1.sinks.k1.kafka.producer.acks=1

@@ -9,48 +9,7 @@ mysql
 账号root
 密码123456
 
-jdk
-mysql
-Zookeeper
-hadoop
-namenode  resourcemanager 在node1
 
-node3装了hive
-
-node3配了本地yum源
-node3装了
-impala-catalog
-impala-state-store
-impala-server(impalad)
-
-node1  node2
-impala-server(impalad)
-
-node1
-sqoop
-
-node1
-flume
-
-azkaban
-solo-server模式部署
-node1
-Web Server和Executor Server同一进程
-
-two-server模式部署
-node1	MySQL
-node2	web‐server和exec‐server不同进程
-
-multiple-executor模式部署
-node1	mysql
-node2	web-server、exec-server
-node3	exec-server
-
-oozie
-node1
-
-hue
-node1
 列出所有安装的内容
  rpm -qa |grep java
 机器之间复制目录
@@ -76,6 +35,37 @@ sbin/mr-jobhistory-daemon.sh start historyserver  历史job任务
 http://192.168.88.163:50070/explorer.html#/ 查看hdfs
 http://192.168.88.163:8088/cluster 查看yarn集群
 http://192.168.88.163:19888/jobhistory 查看历史完成的Job任务
+
+kafka启动命令
+前台启动：cd /export/servers/kafka_2.11-0.10.0.0
+bin/kafka-server-start.sh config/server.properties
+
+后台启动：cd /export/servers/kafka_2.11-0.10.0.0
+nohup bin/kafka-server-start.sh config/server.properties 2>&1 &
+
+停止命令：cd /export/servers/kafka_2.11-0.10.0.0
+bin/kafka-server-stop.sh
+
+jps命令查看kafka是否启动进程
+
+创建topic
+bin/kafka-topics.sh --create --partitions 3 --replication-factor 2 --topic pcap --zookeeper node1:2181,node2:2181,node3:2181
+bin/kafka-console-consumer.sh --bootstrap-server localhost --topic t1703 --from-beginning
+
+生产数据：
+bin/kafka-console-producer.sh --broker-list node01:9092 --topic vehicledata-dev
+
+消费数据：
+bin/kafka-console-consumer.sh --zookeeper node01:2181 --from-beginning --topic vehicledata-dev
+
+
+
+flume启动命令
+nohup bin/flume-ng agent -c ./conf -f ./conf/mixData.properties -n a1 -Dflume.root.logger=INFO,console 2>&1 &
+
+nohup bin/flume-ng agent -c conf -f conf/f2kdup.conf -n a1  -Dflume.root.logger=INFO,console 2>&1 &
+nohup bin/flume-ng agent -c conf -f conf/f2kdup.conf -n b1  -Dflume.root.logger=INFO,console 2>&1 &
+bin/flume-ng agent --conf conf/ --name a1 --conf-file /conf/mixData.properties -Dflume.root.logger=INFO,console
 
 hive启动
 第一种:bin/hive
@@ -132,10 +122,7 @@ sqoop job -exec itcastjob5
 hadoop fs -rm /input/sqoop/pwd/itcastmysql.pwd
 
 
-flume启动命令
-bin/flume-ng agent -c ./conf -f ./conf/mixData.properties -n a1 -Dflume.root.logger=INFO,console
 
-bin/flume-ng agent --conf conf/ --name a1 --conf-file /conf/mixData.properties -Dflume.root.logger=INFO,console
 
 
 阿兹卡班启动命令
@@ -179,22 +166,6 @@ http://node01:16010/master-status
 node01服务器执行以下命令进入hbase的shell客户端
 cd /export/servers/hbase-2.0.0
 bin/hbase shell
-
-kafka启动命令
-前台启动：cd /export/servers/kafka_2.11-0.10.0.0
-bin/kafka-server-start.sh config/server.properties
-
-后台启动：cd /export/servers/kafka_2.11-0.10.0.0
-nohup bin/kafka-server-start.sh config/server.properties 2>&1 &
-
-停止命令：cd /export/servers/kafka_2.11-0.10.0.0
-bin/kafka-server-stop.sh
-
-jps命令查看kafka是否启动进程
-
-创建topic
-bin/kafka-topics.sh --create --partitions 3 --replication-factor 2 --topic text1 --zookeeper node1:2181,node2:2181,node3:2181
-bin/kafka-console-consumer.sh --bootstrap-server localhost --topic t1703 --from-beginning
 
 
 

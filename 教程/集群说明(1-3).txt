@@ -335,6 +335,9 @@ bin/kafka-console-consumer.sh --bootstrap-server node1.itcast.cn:9092 --topic t1
 
 bin/kafka-topics.sh --create --partitions 3 --replication-factor 2 --topic pcap --zookeeper iiebigdata0:2181,iiebigdata1:2181,iiebigdata2:2181
 
+bin/kafka-topics.sh --create --partitions 3 --replication-factor 2 --topic pcap
+
+
 空参实参setget
     @Data
     @NoArgsConstructor
