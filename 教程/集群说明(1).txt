@@ -8,7 +8,23 @@ root
 mysql
 账号root
 密码123456
+查看服务器空间
+df -h
+查看当前目录空间使用
+du -h -x --max-depth=1
 
+#关闭防火墙
+systemctl stop firewalld.service
+
+#开机不启动防火墙
+systemctl disable firewalld.service
+
+开启指定端口:
+firewall-cmd --zone=public --add-port=2181/tcp --permanent
+firewall-cmd --zone=public --add-port=2888/tcp --permanent
+firewall-cmd --zone=public --add-port=3888/tcp --permanent
+
+实时日志：tail -f XXX.log
 
 列出所有安装的内容
  rpm -qa |grep java
@@ -54,9 +70,11 @@ bin/kafka-console-consumer.sh --bootstrap-server localhost --topic t1703 --from-
 
 生产数据：
 bin/kafka-console-producer.sh --broker-list node01:9092 --topic vehicledata-dev
+./bin/kafka-console-producer.sh --broker-list 192.168.88.161:9092,192.168.88.162:9092,192.168.88.163:9092 --topic order
 
 消费数据：
 bin/kafka-console-consumer.sh --zookeeper node01:2181 --from-beginning --topic vehicledata-dev
+nohup bin/kafka-console-consumer.sh --zookeeper iienode3:2181 --from-beginning --topic  datalog 2>&1 &
 
 
 
@@ -67,13 +85,16 @@ nohup bin/flume-ng agent -c conf -f conf/f2kdup.conf -n a1  -Dflume.root.logger=
 nohup bin/flume-ng agent -c conf -f conf/f2kdup.conf -n b1  -Dflume.root.logger=INFO,console 2>&1 &
 bin/flume-ng agent --conf conf/ --name a1 --conf-file /conf/mixData.properties -Dflume.root.logger=INFO,console
 
+nohup bin/flume-ng agent -c conf -f conf/flume-syslog.conf -n a1  -Dflume.root.logger=INFO,console 2>&1 &
+bin/flume-ng agent -c conf -f conf/flume-syslogtow.conf -n a1  -Dflume.root.logger=INFO,console
+
 hive启动
 第一种:bin/hive
 /export/server/hive-2.1.0/bin/hive
 
 第二种:Beeline Client
 首先启动metastore服务
-nohup /export/server/hive-2.1.0/bin/hive --service metastore &
+    nohup /export/server/hive-2.1.0/bin/hive --service metastore &
 然后启动hiveserver2服务
 nohup /export/server/hive-2.1.0/bin/hive --service hiveserver2 &
 启动beeline
