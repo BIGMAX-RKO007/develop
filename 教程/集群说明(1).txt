@@ -13,6 +13,14 @@ df -h
 查看当前目录空间使用
 du -h -x --max-depth=1
 
+查看端口占用
+netstat -apn | grep 2181
+
+
+压缩和解压缩
+tar -zcvf mingcheng.tar.gz duixiangbenshen
+tar -zxvf mingcheng.tar.gz
+
 #关闭防火墙
 systemctl stop firewalld.service
 
@@ -42,6 +50,9 @@ yum -y install lrzsz
 jps命令显示 QuorumPeerMain进程
 
 启动Hadoop命令：
+
+需要source hadoop-env.sh
+
 cd /export/server/hadoop-2.7.5/  进入Hadoop目录
 bin/hdfs namenode -format  首次运行的格式化
 sbin/start-dfs.sh  启动hdfs
