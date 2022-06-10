@@ -23,3 +23,38 @@ PRIMARY KEY id
 ORDER BY (id,
  sku_id)
 SETTINGS index_granularity = 8192
+
+集群表之本地表格式
+CREATE TABLE default.bus_warning_local
+(
+
+    `id` Int8,
+
+    `strategyType` String,
+
+    `byteNumber1` Int16
+)
+ENGINE = MergeTree
+ORDER BY id
+SETTINGS index_granularity = 8192;
+
+
+集群表之集群表格式
+
+CREATE TABLE default.bus_warning_cluster
+(
+
+    `id` Int8,
+
+    `classification` String COMMENT '三大类别',
+
+    `triggerStrategy` String,
+
+    `strategyType` String
+)
+ENGINE = Distributed('ckcluster',
+ 'default',
+ 'bus_warning_local',
+ id);
+
+

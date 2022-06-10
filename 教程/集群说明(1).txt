@@ -14,8 +14,12 @@ df -h
 du -h -x --max-depth=1
 
 查看端口占用
-netstat -apn | grep 2181
+netstat -apn | grep 218
+chown -R clickhouse:clickhouse /etc/clickhouse-client
 
+//添加软连接
+在当前目录添加  '         为此路经或文件                   '    创建软连接位置或名称
+ln -s /export/server/mysql/support-files/mysql.server /etc/init.d/mysql
 
 压缩和解压缩
 tar -zcvf mingcheng.tar.gz duixiangbenshen
@@ -44,6 +48,9 @@ yum -y install lrzsz
 
 启动MySQL命令：
 /etc/init.d/mysql start
+//重启mysql服务
+service mysql restart
+set password for root@localhost = password('123456');
 
 启动zookeeper命令：
 /export/server/zookeeper-3.4.6/bin/zkServer.sh start
@@ -75,11 +82,20 @@ bin/kafka-server-stop.sh
 
 jps命令查看kafka是否启动进程
 
+查看topic
+bin/kafka-topics.sh --zookeeper node1:2181 --list
+
 创建topic
 bin/kafka-topics.sh --create --partitions 3 --replication-factor 2 --topic pcap --zookeeper node1:2181,node2:2181,node3:2181
-bin/kafka-console-consumer.sh --bootstrap-server localhost --topic t1703 --from-beginning
+bin/kafka-topics.sh --create --partitions 1 --replication-factor 1 --topic testone --zookeeper node1:2181
+
+删除topic：
+./bin/kafka-topics.sh  --delete --zookeeper node1:2181  --topic vehicledata-dev
+bin/zkCli.sh -server node01:2181
+rmr /brokers/topics/vehicledata-dev
 
 生产数据：
+bin/kafka-console-consumer.sh --bootstrap-server localhost --topic t1703 --from-beginning
 bin/kafka-console-producer.sh --broker-list node01:9092 --topic vehicledata-dev
 ./bin/kafka-console-producer.sh --broker-list 192.168.88.161:9092,192.168.88.162:9092,192.168.88.163:9092 --topic order
 
@@ -90,7 +106,7 @@ nohup bin/kafka-console-consumer.sh --zookeeper iienode3:2181 --from-beginning -
 
 
 flume启动命令
-nohup bin/flume-ng agent -c ./conf -f ./conf/mixData.properties -n a1 -Dflume.root.logger=INFO,console 2>&1 &
+nohup bin/flume-ng agent -c ./conf -f ./conf/flume-telnet-flume9096.conf -n a1 -Dflume.root.logger=INFO,console 2>&1 &
 
 nohup bin/flume-ng agent -c conf -f conf/f2kdup.conf -n a1  -Dflume.root.logger=INFO,console 2>&1 &
 nohup bin/flume-ng agent -c conf -f conf/f2kdup.conf -n b1  -Dflume.root.logger=INFO,console 2>&1 &
