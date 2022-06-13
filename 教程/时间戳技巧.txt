@@ -1,3 +1,5 @@
+请使用System.currentTimeMillis()代替new Date().getTime()
+
 package com.alibaba.newcpw.sdksearch.utils;
  
 import com.alibaba.fastjson.JSONObject;
@@ -52,3 +54,4 @@ public class TimeTransfer {
     }
  
 }
+

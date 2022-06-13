@@ -13,6 +13,9 @@ df -h
 查看当前目录空间使用
 du -h -x --max-depth=1
 
+查看已删除且占用
+lsof |grep deleted
+
 查看端口占用
 netstat -apn | grep 218
 chown -R clickhouse:clickhouse /etc/clickhouse-client
