@@ -89,8 +89,9 @@ jps命令查看kafka是否启动进程
 bin/kafka-topics.sh --zookeeper node1:2181 --list
 
 创建topic
-bin/kafka-topics.sh --create --partitions 3 --replication-factor 2 --topic pcap --zookeeper node1:2181,node2:2181,node3:2181
+bin/kafka-topics.sh --create --partitions 3 --replication-factor 2 --topic t1 --zookeeper node1:2181,node2:2181,node3:2181
 bin/kafka-topics.sh --create --partitions 1 --replication-factor 1 --topic testone --zookeeper node1:2181
+
 
 删除topic：
 ./bin/kafka-topics.sh  --delete --zookeeper node1:2181  --topic vehicledata-dev
@@ -99,7 +100,7 @@ rmr /brokers/topics/vehicledata-dev
 
 生产数据：
 bin/kafka-console-consumer.sh --bootstrap-server localhost --topic t1703 --from-beginning
-bin/kafka-console-producer.sh --broker-list node01:9092 --topic vehicledata-dev
+bin/kafka-console-producer.sh --broker-list node1:9092 --topic t1
 ./bin/kafka-console-producer.sh --broker-list 192.168.88.161:9092,192.168.88.162:9092,192.168.88.163:9092 --topic order
 
 消费数据：
