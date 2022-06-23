@@ -8,41 +8,41 @@
     <artifactId>flink-elasticsearch-demo</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>mr</module>
-    </modules>
+<!--    <modules>-->
+<!--        <module></module>-->
+<!--    </modules>-->
 
 
     <properties>
         <java.version>1.8</java.version>
-        <flink.version>1.8.0</flink.version>
+        <flink.version>1.13.1</flink.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-core</artifactId>
-            <version>1.8.0</version>
+            <version>${flink.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-clients_2.11</artifactId>
-            <version>1.8.0</version>
+            <version>${flink.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-java</artifactId>
-            <version>1.8.0</version>
+            <version>${flink.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-streaming-java_2.11</artifactId>
-            <version>1.8.0</version>
+            <version>${flink.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-elasticsearch6_2.11</artifactId>
-            <version>1.8.0</version>
+            <version>${flink.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-jdbc_2.11</artifactId>
-            <version>1.12.0</version>
+            <version>${flink.version}</version>
         </dependency>
         <dependency>
             <groupId>ru.yandex.clickhouse</groupId>
@@ -102,11 +102,11 @@
         </dependency>
 
         <!-- hbase开发环境 start-->
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-hbase_2.11</artifactId>
-            <version>${flink.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.flink</groupId>-->
+<!--            <artifactId>flink-hbase_2.11</artifactId>-->
+<!--            <version>${flink.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
@@ -183,6 +183,12 @@
             <groupId>com.streamxhub.streamx</groupId>
             <artifactId>streamx-flink-connector-clickhouse_2.11</artifactId>
             <version>1.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>2.3</version>
         </dependency>
 
 

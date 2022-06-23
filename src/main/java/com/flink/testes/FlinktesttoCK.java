@@ -25,7 +25,7 @@ public class FlinktesttoCK {
         //env.setRuntimeMode(RuntimeExecutionMode.AUTOMATIC);
 
         //TODO 1.source
-        DataStream<String> ds1 = env.readTextFile("data/input/words1.txt");
+        DataStream<String> ds1 = env.readTextFile("data/input/wifiProbe.txt");
         //TODO 2.transformation
         DataStream<Tuple4<String, String, String, String>> dataStream = ds1.map(new MapFunction<String, Tuple4<String, String, String, String>>() {
             @Override
@@ -40,8 +40,8 @@ public class FlinktesttoCK {
         });
 
         //TODO 3.sink
-        //dataStream.print();
-        dataStream.addSink(new ckSink());
+        dataStream.print();
+        //dataStream.addSink(new ckSink());
         //dataStream.print();
 
         //TODO 4.execute
