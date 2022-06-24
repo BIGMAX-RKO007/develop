@@ -13,8 +13,8 @@ public class JDBCUtils {
     static {
        // 初始化变量 : 请将以下四个变量使用properties方式读取外部文件的方式写入
        driverClassName = "com.mysql.jdbc.Driver";
-       url = "jdbc:mysql://localhost:3306/day01";
-       user = "root";
+        url = "jdbc:mysql://localhost:3306/wifiprobe?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&useSSL=false";
+        user = "root";
        password = "123456";
 
 

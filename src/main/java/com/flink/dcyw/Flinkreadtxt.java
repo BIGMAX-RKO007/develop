@@ -10,10 +10,9 @@ import com.flink.dcyw.bean.WifiApBean;
 import com.flink.dcyw.bean.WifiApClientBean;
 import com.flink.dcyw.dao.WhiteListDao;
 import com.flink.dcyw.dao.WifiApClientDWDao;
-import com.flink.dcyw.dao.WifiProbe1Dao;
 import com.flink.dcyw.dao.WifiapDWDao;
+import com.flink.jdbc.utils.JDBCUtils;
 import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.api.java.tuple.Tuple13;
 import org.apache.flink.api.java.tuple.Tuple15;
 import org.apache.flink.api.java.tuple.Tuple4;
 import org.apache.flink.configuration.Configuration;
@@ -28,12 +27,11 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Author itcast
@@ -55,22 +53,7 @@ public class Flinkreadtxt {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         //接口对象
-        WifiProbe1Dao wifiProbe1Dao  = new WifiProbe1Dao() {
-            @Override
-            public List<WifiProbeForm> selectWifiProbeHoursAgo(long timeInMillis) {
-                return null;
-            }
 
-            @Override
-            public List<WifiProbeForm> selectWifiProbeFromid(long id) {
-                return null;
-            }
-
-            @Override
-            public void deleteDataByTime(long timeInMillis) {
-
-            }
-        };
 
         WifiapDWDao wifiapDWDao  = new WifiapDWDao() {
             @Override
@@ -459,7 +442,10 @@ public class Flinkreadtxt {
                 long timeInMillis = calendar.getTimeInMillis();
                 String updateTime = format.format(date);
                 //??存储时间
-                List<WifiProbeForm> probeList = wifiProbe1Dao.selectWifiProbeHoursAgo(timeInMillis);
+                //List<WifiProbeForm> probeList = wifiProbe1Dao.selectWifiProbeHoursAgo(timeInMillis);
+
+                List<WifiProbeForm> probeList = wifiProbe1Dao(timeInMillis);
+
 
                 //遍历
                 for (Integer deviceId : hashMap.keySet()){
@@ -467,7 +453,10 @@ public class Flinkreadtxt {
                     cleanDataForAp618(list, updateTime);
                     cleanDataForApClient618(probeList, updateTime, deviceId);
                 }
-                List<WifiApBean> apList = wifiapDWDao.selectLatestUpdate(updateTime);
+                //List<WifiApBean> apList = wifiapDWDao.selectLatestUpdate(updateTime);
+                List<WifiApBean> apList = wifiapDWDao(updateTime);
+
+
                 HashMap<String, Object> map = new HashMap<>();
                 HashMap<String, Object> paramMap = new HashMap<>();
                 for (int i = 0; i < apList.size(); i++) {
@@ -477,18 +466,11 @@ public class Flinkreadtxt {
                     paramMap.put("mac", mac);
                     paramMap.put("updateTime", updateTime);
                     paramMap.put("deviceId", deviceId);
-//            List<WifiApClientBean> list1 = wifiApClientDWDao.selectCorresponding(mac, updateTime);
-                    List<WifiApClientBean> list1 = wifiApClientDWDao.selectCorresponding(paramMap);
-//            List<WifiApClientBean> list1 = new ArrayList<>();
-//            for(WifiApClientBean wifiApClientBean : apClientList618){
-//                if (mac.equals(wifiApClientBean.getMac()) && deviceId.equals(wifiApClientBean.getDeviceId())){
-//                    list1.add(wifiApClientBean);
-//                }
-//            }
 
+                    //List<WifiApClientBean> list1 = wifiApClientDWDao.selectCorresponding(paramMap);
+                    List<WifiApClientBean> list1 = wifiApClientDWDao(paramMap);
                     int upside = 0;
                     int down = 0;
-
                     for (int i1 = 0; i1 < list1.size(); i1++) {
                         String upside2 = list1.get(i1).getUpside();
                         String down2 = list1.get(i1).getDown();
@@ -595,6 +577,111 @@ public class Flinkreadtxt {
 
         //TODO 4.execute
         env.execute();
+    }
+
+    private static List<WifiApClientBean> wifiApClientDWDao(HashMap<String, Object> paramMap) {
+    }
+
+    private static List<WifiProbeForm> wifiProbe1Dao(Long time) throws SQLException {
+        //1. 注册驱动
+        //2. 根据驱动管理类, 获取连接
+        Connection connection = com.flink.dcyw.JDBCUtils.getConnection();
+        //3. 根据连接创建sql语句执行平台
+        Statement statement = connection.createStatement();
+        //4. 执行SQL, 获取结果
+        String sql = "select id, event_type eventType,device_id " +
+                "deviceId,ssid,mac,encryption,terminal_ssid terminalSsid," +
+                "terminal_mac terminalMac,channel,power,distance,monitoring_site monitoringSite," +
+                "index_name indexName,time,primary_classification primaryClassification," +
+                "secondary_classification secondaryClassification,upside,down," +
+                "duration from wifiprobe1 where time > '"+ time +"';";
+        ResultSet resultSet = statement.executeQuery(sql);
+        List<WifiProbeForm> probeList = new ArrayList<>();
+
+        //5. 处理结果集:
+        while(resultSet.next()){
+            //WifiProbeForm wifiProbeForm = new WifiProbeForm();
+            long id = resultSet.getLong("id");
+            //wifiProbeForm.setId(id);
+            String event_type = resultSet.getString("event_type");
+            long timea = resultSet.getLong("time");
+            long device_id = resultSet.getLong("device_id");
+            String ssid = resultSet.getString("ssid");
+            String mac = resultSet.getString("mac");
+            String encryption = resultSet.getString("encryption");
+            String terminal_ssid = resultSet.getString("terminal_ssid");
+            String terminal_mac = resultSet.getString("terminal_mac");
+            Long channel = resultSet.getLong("channel");
+            String primary_classification = resultSet.getString("primary_classification");
+            String secondary_classification = resultSet.getString("secondary_classification");
+            String power = resultSet.getString("power");
+            String distance = resultSet.getString("distance");
+            String monitoring_site = resultSet.getString("monitoring_site");
+            String index_name = resultSet.getString("index_name");
+            String upside = resultSet.getString("upside");
+            String down = resultSet.getString("down");
+            String duration = resultSet.getString("duration");
+            WifiProbeForm wifiProbeForm = new WifiProbeForm(id,event_type,timea,device_id,ssid,mac,
+                    encryption,terminal_ssid,terminal_mac,channel,primary_classification,secondary_classification,
+                    power,distance,monitoring_site,index_name,upside,down,duration);
+
+            probeList.add(wifiProbeForm);
+            System.out.println(wifiProbeForm);
+        }
+        return probeList;
+    }
+    private static List<WifiApBean> wifiapDWDao(String updateTime) throws SQLException {
+        //1. 注册驱动
+        //2. 根据驱动管理类, 获取连接
+        Connection connection = com.flink.dcyw.JDBCUtils.getConnection();
+        //3. 根据连接创建sql语句执行平台
+        Statement statement = connection.createStatement();
+        //4. 执行SQL, 获取结果
+
+        String sql = "select id,event_type eventType,device_id deviceId,ssid,mac,encryption,channel,power,distance," +
+                "monitoring_site monitoringSite\n" +
+                "        ,index_name indexName,update_time updateTime,unix_time unixTime,status,risk,ap_type apType,freq_band freqBand\n" +
+                "        from wifiap where update_time='"+updateTime+"'}";
+        ResultSet resultSet = statement.executeQuery(sql);
+        List<WifiApBean> probeList = new ArrayList<>();
+
+        //5. 处理结果集:
+        while(resultSet.next()){
+            //WifiProbeForm wifiProbeForm = new WifiProbeForm();
+            long id = resultSet.getLong("id");
+            String event_type = resultSet.getString("event_type");
+            long device_id = resultSet.getLong("device_id");
+            String ssid = resultSet.getString("ssid");
+            String mac = resultSet.getString("mac");
+            String encryption = resultSet.getString("encryption");
+            //String terminal_ssid = resultSet.getString("terminal_ssid");
+            //String terminal_mac = resultSet.getString("terminal_mac");
+            Long channel = resultSet.getLong("channel");
+            //String primary_classification = resultSet.getString("primary_classification");
+            //String secondary_classification = resultSet.getString("secondary_classification");
+            String power = resultSet.getString("power");
+            String distance = resultSet.getString("distance");
+            String monitoring_site = resultSet.getString("monitoring_site");
+            String index_name = resultSet.getString("index_name");
+            String updateTime2 = resultSet.getString("updatetime");
+            String unix_time = resultSet.getString("unix_time");
+            long risk = resultSet.getLong("risk");
+            long status = resultSet.getLong("status");
+            String ap_type = resultSet.getString("ap_type");
+            long icount = resultSet.getLong("icount");
+            long freq_band = resultSet.getLong("freq_band");
+            String upside = resultSet.getString("upside");
+            String down = resultSet.getString("down");
+            String duration = resultSet.getString("duration");
+            WifiApBean wifiApBean = new WifiApBean(id,event_type,device_id,ssid,mac,
+                    encryption,channel,power,distance,monitoring_site,index_name,updateTime2,unix_time,
+                    risk,status,ap_type,icount,freq_band,upside,down,duration);
+
+
+            probeList.add(wifiApBean);
+            System.out.println(wifiApBean);
+        }
+        return probeList;
     }
 
 
@@ -1532,6 +1619,8 @@ public class Flinkreadtxt {
         long end = System.currentTimeMillis();
 //        System.out.println("此次刷新对应关系共花费:" + (end - start));
     }
+
+
 
 
 }

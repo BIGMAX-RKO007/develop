@@ -15,7 +15,7 @@ public class jdbctest {
         //3. 根据连接创建sql语句执行平台
         Statement statement = connection.createStatement();
         //4. 执行SQL, 获取结果
-        String sql = "select * from user ";
+        String sql = "select * from wifiprobe1 ";
         ResultSet resultSet = statement.executeQuery(sql);
         //5. 处理结果集:
         while(resultSet.next()){

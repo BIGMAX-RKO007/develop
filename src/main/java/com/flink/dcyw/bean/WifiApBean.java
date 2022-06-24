@@ -83,6 +83,11 @@ public class WifiApBean implements Serializable {
 	private String down;
 	private Integer duration;
 
+
+    public WifiApBean(){}
+    public WifiApBean(long id, String event_type, long device_id, String ssid, String mac, String encryption, Long channel, String power, String distance, String monitoring_site, String index_name, String updateTime2, String unix_time, long risk, long status, String ap_type, long icount, long freq_band, String upside, String down, String duration) {
+    }
+
     public Long getId() {
         return id;
     }
