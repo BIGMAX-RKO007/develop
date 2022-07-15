@@ -1,0 +1,24 @@
+初始化本地文件夹为仓库
+git init
+查看仓库文件状态
+git status   :红色表示未提交  :绿色表示已提交
+提交到暂存区
+git add .
+提交到本地仓库
+git commit -m "git initprogect"
+
+查看分支
+ git beanck
+ git status
+On branch master:显示分支
+
+新建分支
+ git checkout -b tabbar
+上传到gitee一个新分支
+git push -u origin tabbar
+切换分支
+ git checkout master
+合并分支
+git merge tabber:新分支
+
+

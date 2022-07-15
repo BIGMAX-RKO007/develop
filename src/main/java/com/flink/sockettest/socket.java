@@ -11,7 +11,7 @@ public class socket {
 
         public static void main(String args[]) throws Exception {
             //为了简单起见，所有的异常都直接往外抛
-            String host = "10.10.41.251";  //要连接的服务端IP地址192.168.110.245
+            String host = "127.0.0.1";  //要连接的服务端IP地址192.168.110.245
             int port = 20189;   //要连接的服务端对应的监听端口
             //与服务端建立连接
             //建立连接后就可以往服务端写数据了
@@ -23,9 +23,10 @@ public class socket {
 
                 //writer.write("eof\n");
 //                writer.write("111111111\n");
-                //writer.write("{\"messageProtocolVersion\":\"1\",\"messageDeviceTypeId\":1,\"messageProductId\":0,\"messageDeviceDescribe\":\"0\",\"messageEmbeddedSoftwareVersion\":\"0\",\"messageChipVersion\":\"0\",\"messageDeviceSerialId\":\"JAJX01710001C100\",\"messagePackageId\":0,\"messageLoadLength\":0,\"messageNumber\":1,\"messageSplitSerialId\":0,\"verifyCode\":0,\"reserved\":0,\"basicMessageBasicList\":[{\"srcMac\":\"11-22-33-aa-44-55\",\"destMac\":\"10-20-30-40-50-60\",\"srcIp\":\"10.10.10.100\",\"destIp\":\"10.10.10.110\",\"srcPort\":8080,\"destPort\":8090,\"protocolType\":0,\"byteNumber\":-31395,\"packageNumber\":21773,\"verifyMessageBodyType\":1,\"verifyTypeId\":101,\"loadLength\":31,\"verifyFunctionModuleCode\":0}],\"tempVerifyCode\":0,\"messageSplit\":false}\n");
+                //
+                writer.write("{\"messageProtocolVersion\":\"1\",\"messageDeviceTypeId\":1,\"messageProductId\":0,\"messageDeviceDescribe\":\"0\",\"messageEmbeddedSoftwareVersion\":\"0\",\"messageChipVersion\":\"0\",\"messageDeviceSerialId\":\"JAJX01710001C100\",\"messagePackageId\":0,\"messageLoadLength\":0,\"messageNumber\":1,\"messageSplitSerialId\":0,\"verifyCode\":0,\"reserved\":0,\"basicMessageBasicList\":[{\"srcMac\":\"11-22-33-aa-44-55\",\"destMac\":\"10-20-30-40-50-60\",\"srcIp\":\"10.10.10.100\",\"destIp\":\"10.10.10.110\",\"srcPort\":8080,\"destPort\":8090,\"protocolType\":0,\"byteNumber\":-31395,\"packageNumber\":21773,\"verifyMessageBodyType\":1,\"verifyTypeId\":101,\"loadLength\":31,\"verifyFunctionModuleCode\":0}],\"tempVerifyCode\":0,\"messageSplit\":false}\n");
                 //{"messageProtocolVersion":"0","messageDeviceTypeId":0,"messageProductId":0,"messageDeviceDescribe":"0","messageEmbeddedSoftwareVersion":"0","messageChipVersion":"0","messageDeviceSerialId":"JAJX01710001C100","messagePackageId":0,"messageLoadLength":0,"messageNumber":1,"messageSplitSerialId":0,"verifyCode":0,"reserved":0,"basicMessageBasicList":[{"srcMac":"11-22-33-aa-44-55","destMac":"10-20-30-40-50-60","srcIp":"10.10.10.100","destIp":"10.10.10.110","srcPort":8080,"destPort":8090,"protocolType":0,"byteNumber":-31395,"packageNumber":21773,"verifyMessageBodyType":1,"verifyTypeId":101,"loadLength":31,"verifyFunctionModuleCode":0}],"tempVerifyCode":0,"messageSplit":false}
-                writer.write("{\"device_id\": \"222222222222\",\"device_ip\": \"10.45.69.3\",\"interface_icon\": \"核心交换\"," +
+                //writer.write("{\"device_id\": \"222222222222\",\"device_ip\": \"10.45.69.3\",\"interface_icon\": \"核心交换\"," +
 //                        "\"data_type\": 1," +
 //                        "\"time\": 1581927006," +
 //                        "\"sip\": \"1.2.170.2\"," +
@@ -55,7 +56,7 @@ public class socket {
 //                        "\"content_encoding\": \"base64\"," +
 //                        "\"content_length\": 256," +
 //                        "\"mail_size\": 1234," +
-                        "\"file_list\": [“123.exe”]}\n");
+                        //"\"file_list\": [“123.exe”]}\n");
                 //"srcMac":"11-22-33-aa-44-55",
                 //writer.write("{\"userId\":\"1\",\"day\":\"2020-01-05\",\"data\":[{\"package\":\"com.zyd\",\"activetime\":\"2311\"}]}\n");
                 Thread.sleep(5000);

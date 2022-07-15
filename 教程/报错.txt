@@ -1,0 +1,3 @@
+com.alibaba.fastjson.JSONException: syntax error, position at 0, name http_req_header
+json报错:name http_req_header这个key的value有问题.可能是出现反斜杠"\"
+解决:String replace = s.replace("\\\\", "");:将"\"反斜杠替换为空字符串
