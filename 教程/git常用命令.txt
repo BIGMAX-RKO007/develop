@@ -8,7 +8,7 @@ git add .
 git commit -m "git initprogect"
 
 查看分支
- git beanck
+ git branch
  git status
 On branch master:显示分支
 
@@ -19,6 +19,7 @@ git push -u origin tabbar
 切换分支
  git checkout master
 合并分支
-git merge tabber:新分支
+git merge tabber
+          新分支名称
 
 
