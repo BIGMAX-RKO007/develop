@@ -1,0 +1,6 @@
+所有机器执行
+yum install ntpdate -y
+systemctl start ntpd
+systemctl enable ntpd
+3秒后查看
+date

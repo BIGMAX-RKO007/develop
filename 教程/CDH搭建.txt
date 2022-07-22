@@ -1,3 +1,5 @@
+/opt/cloudera/parcels/CDH-5.9.2-1.cdh5.9.2.p0.3/lib/zookeeper/bin/zkServer.sh status
+
 1:登录所有机器配置hosts
 
 hostnamectl set-hostname hadoop101
