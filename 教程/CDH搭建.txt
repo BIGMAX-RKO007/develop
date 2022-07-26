@@ -58,7 +58,12 @@ use mysql;
 select User, Host, Password from user;
 
 
+zookeeper报错:
+以下网络接口似乎未以全速运行：virbr0-nic。
+2 主机网络接口似乎以全速运行。对于
+2 主机网络接口，Cloudera Manager Agent 无法确定双工模式或接口速度。
 
-
+解决:
+将每个主机中配置栏搜索"网络接口"  网络接口收集排除正则表达式   ^virbr
 
 
