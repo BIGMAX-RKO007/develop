@@ -3,6 +3,9 @@
 
   tail -f 事实查看日志
 
+  清除linux文件中#号开头的注释信息
+  :g/^#/d
+
 history N		显示最近N条命令
 history -c		清除所有的历史记录
 history -w  xxx.txt	保存历史记录到文本xxx.txt

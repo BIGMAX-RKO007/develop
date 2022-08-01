@@ -1,6 +1,33 @@
 所有机器执行
-yum install ntpdate -y
+yum install ntp ntpdate -y
 systemctl start ntpd
-systemctl enable ntpd
-3秒后查看
+主节点配置:
+vim /etc/ntp.conf
+
+    清楚#号的注释:  :g/^#/d
+
+    driftfile /var/lib/ntp/drift
+    restrict default nomodify notrap nopeer noquery
+    restrict 127.0.0.1
+    restrict ::1
+    restrict 10.10.42.0 mask 255.255.255.0 nomodify notrap
+    #server 210.72.145.44 perfer #中国国家授时中心
+    #server 1.cn.pool.ntp.org
+    #表示如果外部不能获取时间.则使用本地时间
+    server 127.127.1.0 iburst
+    includefile /etc/ntp/crypto/pw
+    keys /etc/ntp/keys
+systemctl restart ntpd
+查看获取时间的服务器
+ntpq -p
+
+次节点配置:
+vim /etc/ntp.conf
+#添加主节点到配置文件即可
+server 10.10.42.241
+
+
+systemctl restart ntpd
+查看获取时间的服务器
+ntpq -p
 date

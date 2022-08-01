@@ -1,0 +1,8 @@
+单机单节点
+./minio server /bigdata/part3/miniodata --console-address :9090 2>&1 &
+单机多节点(需要为4个以上挂载盘,不能为/root盘,)
+nohup ./minio server /opt/minioserver/miniodata /bigdata/part1/miniodata /bigdata/part2/miniodata /bigdata/part3/miniodata --console-address :9090 2>&1 &
+以上命令使用了一个跟文件夹代替,可以使用,但是会报错:Error: Disk: /opt/minioserver/miniodata is a root disk (*errors.errorString)
+
+集群部署
+

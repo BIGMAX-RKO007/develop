@@ -8,10 +8,14 @@
                                 <replica>
                                         <host>hadoop101</host>
                                         <port>19000</port>
+                                        <user>default</user>
+                                        <password>123456</password>
                                 </replica>
                                 <replica>
                                         <host>hadoop102</host>
                                         <port>19000</port>
+                                        <user>default</user>
+                                        <password>123456</password>
                                 </replica>
                         </shard>
                         <shard>
@@ -19,10 +23,14 @@
                                 <replica>
                                         <host>hadoop103</host>
                                         <port>19000</port>
+                                        <user>default</user>
+                                        <password>123456</password>
                                 </replica>
                                 <replica>
                                         <host>hadoop104</host>
                                         <port>19000</port>
+                                        <user>default</user>
+                                        <password>123456</password>
                                 </replica>
                         </shard>
                         <shard>
@@ -30,10 +38,14 @@
                                 <replica>
                                         <host>hadoop105</host>
                                         <port>19000</port>
+                                        <user>default</user>
+                                        <password>123456</password>
                                 </replica>
                                 <replica>
                                         <host>hadoop106</host>
                                         <port>19000</port>
+                                        <user>default</user>
+                                        <password>123456</password>
                                 </replica>
                         </shard>
                         <shard>
@@ -41,10 +53,14 @@
                                 <replica>
                                         <host>hadoop107</host>
                                         <port>19000</port>
+                                        <user>default</user>
+                                        <password>123456</password>
                                 </replica>
                                 <replica>
                                         <host>hadoop108</host>
                                         <port>19000</port>
+                                        <user>default</user>
+                                        <password>123456</password>
                                 </replica>
                         </shard>
                 </ckcluster>
@@ -86,7 +102,7 @@
         </zookeeper-servers>
 
         <macros>
-        <shard>03</shard> <!--不同机器放的分片数不一样-->
+        <shard>03</shard> <!--不同机器放的分片第几块不一样-->
         <replica>rep_3_5</replica> <!--不同机器放的副本数不一样-->
         </macros>
 </yandex>
