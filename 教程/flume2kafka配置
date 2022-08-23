@@ -1,20 +1,20 @@
 自定义sink
-tier4.sources  =  r1
-tier4.channels  =  c1
+a1.sources  =  r1
+a1.channels  =  c1
 
-tier4.sources.r1.type  = syslogudp
-tier4.sources.r1.bind  = 10.10.41.251
-tier4.sources.r1.port  = 20181
-tier4.sources.r1.max-line-length = 512000
-tier4.sources.r1.eventSize = 512000
+a1.sources.r1.type  = syslogudp
+a1.sources.r1.bind  = 39.96.136.7
+a1.sources.r1.port  = 20181
+a1.sources.r1.max-line-length = 512000
+a1.sources.r1.eventSize = 512000
 
-tier4.channels.c1.type = org.apache.flume.channel.kafka.KafkaChannel
-tier4.channels.c1.kafka.bootstrap.servers = iienode1:9092,iienode2:9092,iienode3:9092
-tier4.channels.c1.kafka.topic = da_trace
-tier4.channels.c1.parseAsFlumeEvent = false
-tier4.channels.c1.kafka.producer.max.request.size = 704857600
+a1.channels.c1.type = org.apache.flume.channel.kafka.KafkaChannel
+a1.channels.c1.kafka.bootstrap.servers = localhost:9092
+a1.channels.c1.kafka.topic = da_warning
+a1.channels.c1.parseAsFlumeEvent = false
+a1.channels.c1.kafka.producer.max.request.size = 704857600
 
-tier4.sources.r1.channels  =  c1
+a1.sources.r1.channels  =  c1
 
 自定义sink不同topic
 a1.sources  =  r1

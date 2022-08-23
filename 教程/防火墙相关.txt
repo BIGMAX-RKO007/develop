@@ -19,3 +19,10 @@ chkconfig iptables off
 systemctl enable firewalld
 1
 service iptables restart
+
+不关闭防火墙放行某IP
+firewall-cmd --permanent --zone=trusted --add-source=10.10.41.117/32
+热加载
+firewall-cmd  --reload
+重启
+systemctl restart firewalld

@@ -123,6 +123,8 @@ bin/flume-ng agent --conf conf/ --name a1 --conf-file /conf/mixData.properties -
 nohup bin/flume-ng agent -c conf -f conf/flume-syslog.conf -n a1  -Dflume.root.logger=INFO,console 2>&1 &
 bin/flume-ng agent -c conf -f conf/flume-syslogtow.conf -n a1  -Dflume.root.logger=INFO,console
 
+nohup bin/flume-ng agent -c conf -f jobs/da_warning.conf -n a1  -Dflume.root.logger=INFO,console 2>&1 &
+
 hive启动
 第一种:bin/hive
 /export/server/hive-2.1.0/bin/hive

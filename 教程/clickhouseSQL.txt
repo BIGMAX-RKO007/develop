@@ -7,55 +7,35 @@ clickhouse-client --query "CREATE TABLE tmp ENGINE = MergeTree ORDER BY id AS SE
 shell 删除clickhouse 数据表
 clickhouse-client --query "drop table bigdata.tmp"
 
-创建副本表
-CREATE TABLE default.t_order_rep2
-(
-    `id` UInt32,
-    `sku_id` String,
-    `total_amount` Decimal(16,
- 2),
-    `create_time` DateTime
-)	     #定义副本表引擎	
-ENGINE = ReplicatedMergeTree('/clickhouse/table/01/t_order_rep',
- 'rep_103')
-PARTITION BY toYYYYMMDD(create_time)
-PRIMARY KEY id
-ORDER BY (id,
- sku_id)
-SETTINGS index_granularity = 8192
+删除数据
+alter table t_order_smt delete where 1 = 1;
+修改数据
+alter table t_order_smt update total_amount=toDecimal32(2000.00,2) where id
+=102;
 
-集群表之本地表格式
-CREATE TABLE default.bus_warning_local
-(
+维度查询:（2）with rollup：从右至左去掉维度进行小计
+hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with rollup;
 
-    `id` Int8,
+        with cube : 从右至左去掉维度进行小计，再从左至右去掉维度进行小计
+hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with cube;
 
-    `strategyType` String,
+        with totals: 只计算合计
+hadoop102 :) select id , sku_id,sum(total_amount) from t_order_mt group by id,sku_id with totals;
 
-    `byteNumber1` Int16
-)
-ENGINE = MergeTree
-ORDER BY id
-SETTINGS index_granularity = 8192;
+查询 number 列 如果 = 1 则显示hello 若为fouse 则 进行第二个判断 (number =2则显示word ,否则为atguigu  在numbers表 前十行 )
+SELECT number = 1 ? 'hello' : (number = 2 ? 'world' : 'atguigu') FROM numbers(10);
+//查看语法优化
+EXPLAIN SYNTAX SELECT number = 1 ? 'hello' : (number = 2 ? 'world' : 'atguigu') FROM numbers(10);
+
+//开启三元运算符优化
+SET optimize_if_chain_to_multiif = 1;
+//再次查看语法优化
+EXPLAIN SYNTAX SELECT number = 1 ? 'hello' : (number = 2 ? 'world' : 'atguigu') FROM numbers(10);
+
+//返回优化后的语句
+SELECT multiIf(number = 1, \'hello\', number = 2, \'world\', \'xyz\') FROM numbers(10)
 
 
-集群表之集群表格式
-
-CREATE TABLE default.bus_warning_cluster
-(
-
-    `id` Int8,
-
-    `classification` String COMMENT '三大类别',
-
-    `triggerStrategy` String,
-
-    `strategyType` String
-)
-ENGINE = Distributed('ckcluster',
- 'default',
- 'bus_warning_local',
- id);
 
 create table t_order_rep2 (id UInt32,sku_id String,total_amount Decimal(16,2),create_time Datetime) engine =ReplicatedMergeTree('/clickhouse/table/01/t_order_rep','rep_102')prtition by toYYYYMMDD(create_time)primary key (id)order by (id,sku_id);
 
