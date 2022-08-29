@@ -10,6 +10,34 @@ yum install -y docker-ce
 # 5、 查看docker版本，验证是否验证成功
 docker -v
 
+docker ps 查看运行的镜像
+docker rm -f 镜像ID 停止镜像
+docker rmi -f 镜像ID 删除镜像
+docker build -t ffxx_docker:1.6 .     执行dockerfile文件
+
+我们可以使用 save 和 load 命令，通过镜像id导出镜像到宿主机，命令如下：
+docker save -o coredns.tar k8s.gcr.io/coredns:1.3.1
+然后将导出的镜像文件上传到网络不好的主机上，执行以下命令进行镜像导入，命令如下：
+docker load < coredns.tar
+
+将 docker-compose软件放到/usr/local/bin/ 目录下 执行 chmod +x /usr/local/bin/docker-compose  docker-compose --version
+
+Compose常用命令
+docker-compose -h                           # 查看帮助
+docker-compose up                           # 启动所有docker-compose服务
+docker-compose up -d                        # 启动所有docker-compose服务并后台运行
+docker-compose down                         # 停止并删除容器、网络、卷、镜像。
+docker-compose exec  yml里面的服务id                 # 进入容器实例内部  docker-compose exec docker-compose.yml文件中写的服务id /bin/bash
+docker-compose ps                      # 展示当前docker-compose编排过的运行的所有容器
+docker-compose top                     # 展示当前docker-compose编排过的容器进程
+
+docker-compose logs  yml里面的服务id     # 查看容器输出日志
+docker-compose config     # 检查配置
+docker-compose config -q  # 检查配置，有问题才有输出
+docker-compose restart   # 重启服务
+docker-compose start     # 启动服务
+docker-compose stop      # 停止服务
+
 ### 部署Tomcat
 
 1. 搜索tomcat镜像
