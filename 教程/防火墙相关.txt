@@ -22,6 +22,7 @@ service iptables restart
 
 不关闭防火墙放行某IP
 firewall-cmd --permanent --zone=trusted --add-source=10.10.41.170/32
+firewall-cmd --permanent --zone=trusted --add-source=10.10.40.114/32
 热加载
 firewall-cmd  --reload
 重启

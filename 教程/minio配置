@@ -7,6 +7,7 @@ nohup ./minio server /opt/minioserver/miniodata /bigdata/part1/miniodata /bigdat
 集群部署
 创建目录：
 mkdir -p /opt/minio/{run,data1，data2} && mkdir -p /etc/minio
+mkdir -p /data/minio_data/
 上传Minio到/opt/minio/run
 集群启动文件配置
     vim /opt/minio/run/run.sh

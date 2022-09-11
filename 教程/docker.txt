@@ -13,7 +13,10 @@ docker -v
 docker ps 查看运行的镜像
 docker rm -f 镜像ID 停止镜像
 docker rmi -f 镜像ID 删除镜像
-docker build -t ffxx_docker:1.6 .     执行dockerfile文件
+docker build -t zdfy_docker:1.0 .     执行dockerfile文件
+
+docker run -d -p 8080:8080 zdfy_docker:1.0
+
 docker commit -m="描述信息" -a="作者" 容器id 目标镜像名:1.1
 
 我们可以使用 save 和 load 命令，通过镜像id导出镜像到宿主机，命令如下：
@@ -38,6 +41,9 @@ docker-compose config -q  # 检查配置，有问题才有输出
 docker-compose restart   # 重启服务
 docker-compose start     # 启动服务
 docker-compose stop      # 停止服务
+
+### 部署docker可视化
+docker run -d -p 8000:8000 -p 9000:9000 --name portainer     --restart=always     -v /var/run/docker.sock:/var/run/docker.sock     -v portainer_data:/data     portainer/portainer
 
 ### 部署Tomcat
 
@@ -154,6 +160,11 @@ docker run -id --name=c_redis -p 6379:6379 redis:5.0
 4. 使用外部机器连接redis
 ./redis-cli.exe -h 192.168.149.135 -p 6379
 
+部署minio
+docker pull minio/minio
+
+docker run --name minio -p 9080:9000  -p 9090:9090  -v /install/minio/data:/data -v /install/minio/config:/root/.minio -d --restart=always -e "MINIO_ROOT_USER=adminminio" -e "MINIO_ROOT_PASSWORD=adminminio" minio/minio server /data --console-address ":9090" --address ":9000"
+
 ### 部署clickhouse
 
 mkdir -p /data/clickhouse/data
@@ -165,6 +176,11 @@ docker pull yandex/clickhouse-server
 # 下载指定版本clickhouse
 docker pull yandex/clickhouse-server:20.3.5.21
 
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install build-essential (安装依赖包)
+sudo apt-get install nginx就可以正常安装
+
 https://hub.docker.com/r/yandex/clickhouse-server/dockerfile 文件，EXPOSE 9000 8123 9009 了三个端口
 
 docker run -d --name clickhouse-server --ulimit nofile=262144:262144 \
@@ -175,8 +191,8 @@ docker run -d --name clickhouse-server --ulimit nofile=262144:262144 \
 yandex/clickhouse-server
 
 docker run -d --name clickhouse-server --ulimit nofile=262144:262144 \
--p 8125:8123 -p 19002:9000 -p 9019:9009 \
-data/clickhouse
+-p 8123:8123 -p 19002:9000 -p 9019:9009 \
+clickhouse/data:1.0
 
 docker run -d -p 8123:8123 -p 19000:9000 --name clickhouse yandex/clickhouse-server
 
@@ -264,6 +280,7 @@ mkdir /work
 然后复制/var/lib/mysql下的数据到/work下
 
 cp -r /var/lib/mysql /work
+cp -r /var/lib/clickhouse /work
 
 修改数据库配置文件
 
@@ -276,5 +293,6 @@ vim /etc/mysql.conf.d/mysqld.cnf
 将数据修改为刚才创建的目录
 
 datadir = /work/mysql
+datadir = /work/clickhouse
 重启容器，然后导入数据，然后将容器打包成镜像，然后再启动镜像，发现镜像中的数据有我们之前导入的数据
 
