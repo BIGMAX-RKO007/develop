@@ -35,7 +35,15 @@ EXPLAIN SYNTAX SELECT number = 1 ? 'hello' : (number = 2 ? 'world' : 'atguigu') 
 //返回优化后的语句
 SELECT multiIf(number = 1, \'hello\', number = 2, \'world\', \'xyz\') FROM numbers(10)
 
-
+采用副本可迭代引擎格式
+ENGINE = ReplicatedReplacingMergeTree('/clickhouse/table/{shard}/bus_warning_one',
+ '{replica}',
+ currenttime)
+PARTITION BY toYYYYMMDD(currenttime)
+PRIMARY KEY date
+ORDER BY (date,
+ uuid)
+SETTINGS index_granularity = 8192;
 
 create table t_order_rep2 (id UInt32,sku_id String,total_amount Decimal(16,2),create_time Datetime) engine =ReplicatedMergeTree('/clickhouse/table/01/t_order_rep','rep_102')prtition by toYYYYMMDD(create_time)primary key (id)order by (id,sku_id);
 

@@ -315,7 +315,7 @@ kafka启动命令
 bin/kafka-server-start.sh config/server.properties
 
 后台启动：cd /export/servers/kafka_2.11-0.10.0.0
-nohup bin/kafka-server-start.sh config/server.properties
+nohup bin/kafka-server-start.sh config/server.properties 2>&1 &
 
 停止命令：cd /export/servers/kafka_2.11-0.10.0.0
 bin/kafka-server-stop.sh

@@ -16,6 +16,7 @@
     <properties>
         <java.version>1.8</java.version>
         <flink.version>1.13.1</flink.version>
+        <json.version>20190722</json.version>
     </properties>
 
     <dependencies>
@@ -108,6 +109,11 @@
 <!--            <version>${flink.version}</version>-->
 <!--        </dependency>-->
         <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-planner-blink_2.12</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
             <version>2.1.5</version>
@@ -189,6 +195,13 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>2.3</version>
+        </dependency>
+
+        <!-- json解析依赖 -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
         </dependency>
 
 
