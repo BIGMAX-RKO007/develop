@@ -46,6 +46,8 @@ export HIVE_CONF_DIR=hive下的conf目录
 添加mysql的连接驱动包到hive的lib目录下
 https://dev.mysql.com/downloads/
 
+bleen启动失败，试试将hive.site文件放入hadoop/etc/hadoop/
+
 配置hive的环境变量
 
 echo 'export HIVE_HOME=/opt/hive/' >> /etc/profile
