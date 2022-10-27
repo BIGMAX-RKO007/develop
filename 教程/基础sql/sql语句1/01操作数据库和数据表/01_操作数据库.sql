@@ -1,3 +1,11 @@
+1）创建 test 用户
+mysql -h hadoop1 -P 9030 -uroot -p
+create user 'test' identified by 'test';
+2）创建数据库
+create database test_db;
+3）用户授权
+grant all on test_db to test;
+
 /*
 	查询所有数据库
 	标准语法：
