@@ -1,5 +1,5 @@
 
-/zookeeper
+/include_from
 
 引入外部文件
         <zookeeper incl="zookeeper-servers" optional="true" />

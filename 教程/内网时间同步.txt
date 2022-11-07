@@ -31,3 +31,13 @@ systemctl restart ntpd
 查看获取时间的服务器
 ntpq -p
 date
+
+
+联网状态：
+yum install ntp
+
+chkconfig ntpd on
+
+systemctl start ntpd
+
+ntpdate -u 0.cn.pool.ntp.org

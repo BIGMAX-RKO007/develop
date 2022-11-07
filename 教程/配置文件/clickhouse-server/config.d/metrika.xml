@@ -25,15 +25,15 @@
 	
 	<zookeeper>
 		<node index="1">
-			<host>hadoop01</host>
+			<host>hadoop101</host>
 			<port>2181</port>
 		</node>
 		<node index="2">
-			<host>hadoop02</host>
+			<host>hadoop102</host>
 			<port>2181</port>
 		</node>
 		<node index="3">
-			<host>hadoop03</host>
+			<host>hadoop103</host>
 			<port>2181</port>
 		</node>
 	</zookeeper>
@@ -43,3 +43,4 @@
 		<replica>rep_1_1</replica>
 	</macros>
 </yandex>
+

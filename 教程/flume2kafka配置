@@ -23,7 +23,7 @@ a1.sinks = trace-sink warning-sink AudioDemode-sink SingalList-sink emmsAV-sink
 
 
 a1.sources.r1.type  =  cn.ac.iie.dc.TCPSource
-a1.sources.r1.host  = 192.168.1.112
+a1.sources.r1.host  = 172.16.10.161
 a1.sources.r1.port  = 9997
 a1.sources.r1.max-line-length = 10240
 
@@ -40,7 +40,7 @@ a1.sources.r1.selector.mapping.emmsAV = emmsAV-channel
 #channels
 #trace channel
 #a1.channels.trace-channel.type = org.apache.flume.channel.kafka.KafkaChannel
-#a1.channels.trace-channel.kafka.bootstrap.servers = iiebigdata0:6667,iiebigdata1:6667,iiebigdata2:6667
+#a1.channels.trace-channel.kafka.bootstrap.servers = 172.16.10.161:9092,172.16.10.162:9092,172.16.10.163:9092
 #a1.channels.trace-channel.kafka.topic = trace
 #a1.channels.trace-channel.parseAsFlumeEvent = false
 #a1.channels.trace-channel.kafka.producer.max.request.size = 704857600
@@ -51,7 +51,7 @@ a1.channels.trace-channel.transactionCapacity=300
 
 #warning channel
 #a1.channels.warning-channel.type = org.apache.flume.channel.kafka.KafkaChannel
-#a1.channels.warning-channel.kafka.bootstrap.servers = iiebigdata0:6667,iiebigdata1:6667,iiebigdata2:6667
+#a1.channels.warning-channel.kafka.bootstrap.servers = 172.16.10.161:9092,172.16.10.162:9092,172.16.10.163:9092
 #a1.channels.warning-channel.kafka.topic = warning
 #a1.channels.warning-channel.parseAsFlumeEvent = false
 #a1.channels.warning-channel.kafka.producer.max.request.size = 704857600
@@ -61,7 +61,7 @@ a1.channels.warning-channel.transactionCapacity=30
 
 #AudioDemode channel
 #a1.channels.AudioDemode-channel.type = org.apache.flume.channel.kafka.KafkaChannel
-#a1.channels.AudioDemode-channel.kafka.bootstrap.servers = iiebigdata0:6667,iiebigdata1:6667,iiebigdata2:6667
+#a1.channels.AudioDemode-channel.kafka.bootstrap.servers = 172.16.10.161:9092,172.16.10.162:9092,172.16.10.163:9092
 #a1.channels.AudioDemode-channel.kafka.topic = AudioDemode
 #a1.channels.AudioDemode-channel.parseAsFlumeEvent = false
 #a1.channels.AudioDemode-channel.kafka.producer.max.request.size = 704857600
@@ -71,7 +71,7 @@ a1.channels.AudioDemode-channel.transactionCapacity=30
 
 #SingalList channel
 #a1.channels.SingalList-channel.type = org.apache.flume.channel.kafka.KafkaChannel
-#a1.channels.SingalList-channel.kafka.bootstrap.servers = iiebigdata0:6667,iiebigdata1:6667,iiebigdata2:6667
+#a1.channels.SingalList-channel.kafka.bootstrap.servers = 172.16.10.161:9092,172.16.10.162:9092,172.16.10.163:9092
 #a1.channels.SingalList-channel.kafka.topic = SingalList
 #a1.channels.SingalList-channel.parseAsFlumeEvent = false
 #a1.channels.SingalList-channel.kafka.producer.max.request.size = 704857600
@@ -81,7 +81,7 @@ a1.channels.SingalList-channel.transactionCapacity=100
 
 #emmsAV channel
 #a1.channels.emmsAV-channel.type = org.apache.flume.channel.kafka.KafkaChannel
-#a1.channels.emmsAV-channel.kafka.bootstrap.servers = iiebigdata0:6667,iiebigdata1:6667,iiebigdata2:6667
+#a1.channels.emmsAV-channel.kafka.bootstrap.servers = 172.16.10.161:9092,172.16.10.162:9092,172.16.10.163:9092
 #a1.channels.emmsAV-channel.kafka.topic = emmsAV
 #a1.channels.emmsAV-channel.parseAsFlumeEvent = false
 #a1.channels.emmsAV-channel.kafka.producer.max.request.size = 704857600
@@ -94,7 +94,7 @@ a1.channels.emmsAV-channel.transactionCapacity=100
 # trace-sink
 a1.sinks.trace-sink.type = org.apache.flume.sink.kafka.KafkaSink
 a1.sinks.trace-sink.topic = trace
-a1.sinks.trace-sink.kafka.bootstrap.servers = iiebigdata0:6667,iiebigdata1:6667,iiebigdata2:6667
+a1.sinks.trace-sink.kafka.bootstrap.servers = 172.16.10.161:9092,172.16.10.162:9092,172.16.10.163:9092
 a1.sinks.trace-sink.max.message.size= 20000000
 a1.sinks.trace-sink.kafka.flumeBatchSize = 200
 a1.sinks.trace-sink.kafka.producer.acks = 1
@@ -105,7 +105,7 @@ a1.sinks.trace-sink.kafka.producer.value.deserializer= org.apache.kafka.common.s
 #warning-sink
 a1.sinks.warning-sink.type = org.apache.flume.sink.kafka.KafkaSink
 a1.sinks.warning-sink.topic = warning
-a1.sinks.warning-sink.kafka.bootstrap.servers = iiebigdata0:6667,iiebigdata1:6667,iiebigdata2:6667
+a1.sinks.warning-sink.kafka.bootstrap.servers = 172.16.10.161:9092,172.16.10.162:9092,172.16.10.163:9092
 a1.sinks.warning-sink.max.message.size= 20000000
 a1.sinks.warning-sink.kafka.flumeBatchSize = 200
 a1.sinks.warning-sink.kafka.producer.acks = 1
@@ -116,7 +116,7 @@ a1.sinks.warning-sink.kafka.producer.value.deserializer= org.apache.kafka.common
 #AudioDemode-sink
 a1.sinks.AudioDemode-sink.type = org.apache.flume.sink.kafka.KafkaSink
 a1.sinks.AudioDemode-sink.topic = AudioDemode
-a1.sinks.AudioDemode-sink.kafka.bootstrap.servers = iiebigdata0:6667,iiebigdata1:6667,iiebigdata2:6667
+a1.sinks.AudioDemode-sink.kafka.bootstrap.servers = 172.16.10.161:9092,172.16.10.162:9092,172.16.10.163:9092
 a1.sinks.AudioDemode-sink.max.message.size= 20000000
 a1.sinks.AudioDemode-sink.kafka.flumeBatchSize = 200
 a1.sinks.AudioDemode-sink.kafka.producer.acks = 1
@@ -127,7 +127,7 @@ a1.sinks.AudioDemode-sink.kafka.producer.value.deserializer= org.apache.kafka.co
 #SingalList-sink
 a1.sinks.SingalList-sink.type = org.apache.flume.sink.kafka.KafkaSink
 a1.sinks.SingalList-sink.topic = SingalList
-a1.sinks.SingalList-sink.kafka.bootstrap.servers = iiebigdata0:6667,iiebigdata1:6667,iiebigdata2:6667
+a1.sinks.SingalList-sink.kafka.bootstrap.servers = 172.16.10.161:9092,172.16.10.162:9092,172.16.10.163:9092
 a1.sinks.SingalList-sink.max.message.size= 20000000
 a1.sinks.SingalList-sink.kafka.flumeBatchSize = 200
 a1.sinks.SingalList-sink.kafka.producer.acks = 1
@@ -138,7 +138,7 @@ a1.sinks.SingalList-sink.kafka.producer.value.deserializer= org.apache.kafka.com
 #emmsAV-sink
 a1.sinks.emmsAV-sink.type = org.apache.flume.sink.kafka.KafkaSink
 a1.sinks.emmsAV-sink.topic = emmsAV
-a1.sinks.emmsAV-sink.kafka.bootstrap.servers = iiebigdata0:6667,iiebigdata1:6667,iiebigdata2:6667
+a1.sinks.emmsAV-sink.kafka.bootstrap.servers = 172.16.10.161:9092,172.16.10.162:9092,172.16.10.163:9092
 a1.sinks.emmsAV-sink.max.message.size= 20000000
 a1.sinks.emmsAV-sink.kafka.flumeBatchSize = 200
 a1.sinks.emmsAV-sink.kafka.producer.acks = 1
