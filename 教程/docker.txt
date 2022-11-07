@@ -1,3 +1,6 @@
+在使用docker容器时，有可能没有安装Vi, 安装Vi:apt-get install vim,如果提示：Unable to locate package vim,则需要敲：apt-get
+update, 等更新完毕以后再敲命令： apt-get install vim
+
 安装:
 # 1、yum 包更新到最新
 yum update
