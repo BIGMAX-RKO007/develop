@@ -1,0 +1,30 @@
+new progect
+左侧选择maven
+右侧勾选Create from archetype
+选择maven-archetype-webapp
+(所属组)Groupid : com.***
+（名称）artifactid：hmmm
+
+导入依赖---刷新依赖
+点击右上角EditConfigurations
+Name:设置名称
+Command line: 添加tomcat插件
+
+导入前端框架到webapp
+运行工程查看情况
+
+基于mybats:
+在dao层创建数据库增删改查接口类：
+public interface CompanyDao {
+    int save(Company company);增加
+    int delete(Company company);删除
+    int update(Company company);更改
+    Company findById(String id);查单个
+    List<Company> findAll();}查全部
+
+    添加“核心配置文件”，“映射配置文件”，jdbc.properties到resources
+    核心配置文件--mybatis的主配置文件:sqlmapconfig.xml
+    映射配置文件--代码与数据库表建立映射关系的文件：需要与接口的路径保持统一：com.itheima.***.**Dao.com
+
+
+

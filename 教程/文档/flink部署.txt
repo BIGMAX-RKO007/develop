@@ -13,6 +13,9 @@ export HADOOP_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hadoop/etc/hadoop
 是否启动一个线程检查每个任务正使用的虚拟内存量，如果任务超出分配值，则直接将其杀掉，默认是true。
 在这里面我们需要关闭，因为对于flink使用yarn模式下，很容易内存超标，这个时候yarn会自动杀掉job
 
+关闭HDFS权限：
+dfs.permissions
+
 注意:
 如果使用的是flink on yarn方式，想切换回standalone模式的话，需要删除文件：【/tmp/.yarn-properties-root】
 因为默认查找当前yarn集群中已有的yarn-session信息中的jobmanager
