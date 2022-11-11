@@ -12,6 +12,9 @@ Command line: 添加tomcat插件
 
 导入前端框架到webapp
 运行工程查看情况
+创建 ：dao:数据层
+    ：service：业务层接口  ：impl:业务层接口实现类
+    ：
 
 基于mybats:
 在dao层创建数据库增删改查接口类：
@@ -25,6 +28,30 @@ public interface CompanyDao {
     添加“核心配置文件”，“映射配置文件”，jdbc.properties到resources
     核心配置文件--mybatis的主配置文件:sqlmapconfig.xml
     映射配置文件--代码与数据库表建立映射关系的文件：需要与接口的路径保持统一：com.itheima.***.**Dao.com
+
+    添加工厂类：sqlsesson--执行sql
+    添加工具类：用于处理事务
+
+根据前端页面编写 servlet 类 extens HttpServlet
+    实现父类方法：CTRL +o ,右键单机--generate --overridemethods
+    doget ,dopost
+    类名上加：@WebServlet("/store/company地址")：此类即可通过此地址访问
+    doget方法内的request用于接受前端传过的参数
+    获取相关参数用request。get***获取
+
+    获取参数执行相应增删改查业务
+
+    创建BaseServlet类并继承HttpServlet
+    调用init方法--执行创建service对象
+    然后 servlet类就可以继承 BaseServlet类
+    servlet 类中就不用重复创建service业务层对象了，因为继承了BaseServlet ，BaseServlet继承了HttpServlet
+
+    变更前端list.jsp文件，更改表字段和表的获取名称对应的情况，
+
+    部门表的关系：
+    domain下的实体类增加内连接：（用于多对一的方式进行，所有下属部门关联自己的上级部门，当没有上级部门就是顶级部门）
+
+
 
 
 
