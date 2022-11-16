@@ -51,6 +51,21 @@ public interface CompanyDao {
     部门表的关系：
     domain下的实体类增加内连接：（用于多对一的方式进行，所有下属部门关联自己的上级部门，当没有上级部门就是顶级部门）
 
+    上传图片需要注意前端页面的标签:enctype="multipart/form-data"
+    <form id="editForm" action="${ctx}/store/question?operation=edit" method="post" enctype="multipart/form-data">
+    <div class="col-md-2 title">题干图片</div><!--放到题干后面-->
+                                    <div class="col-md-10 data ">
+                                        <input type="file" class="form-control" placeholder="题干图片" name="picture" value="${question.picture}">
+                                    </div>
+
+                                    <div class="col-md-2 title">题干图片</div>
+                                    <div class="col-md-10 data ">
+                                        <img src="${ctx}/upload/${question.picture}"/>
+                                    </div>
+
+    后端进行判断:
+
+
 
 
 
