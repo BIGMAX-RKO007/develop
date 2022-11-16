@@ -81,6 +81,9 @@ mv mysql-connector-java-5.1.27-bin.jar mysql-connector-java.jar
 
 chmod +x -R parcel-repo/
 
+查看实时日志展示：
+tail -f /var/log/.....
+
 
 zookeeper报错:
 以下网络接口似乎未以全速运行：virbr0-nic。
