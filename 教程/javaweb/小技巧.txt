@@ -2,3 +2,24 @@
 if(true){return},执行到此将return,不会继续向下执行
 判断是不是空白:
 StringUtils.isNotBlank
+map转json:可以用阿里巴巴json或一下
+<!--jackson-->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.9.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.9.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.9.0</version>
+    </dependency>
+
+    //map转成json数据
+            ObjectMapper om = new ObjectMapper();
+            String json = om.writeValueAsString(map);

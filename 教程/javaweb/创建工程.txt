@@ -63,7 +63,12 @@ public interface CompanyDao {
                                         <img src="${ctx}/upload/${question.picture}"/>
                                     </div>
 
-    后端进行判断:
+    后端进行判断:是否有图片过来然后进行操作
+    报表导出:
+    运用pio的功能创建表,表操作,将表写入流,定义文件名与文件格式,返回给前端
+    用户权限:RBAC实现方式
+
+
 
 
 
