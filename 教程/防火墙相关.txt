@@ -27,3 +27,16 @@ firewall-cmd --permanent --zone=trusted --add-source=10.10.40.114/32
 firewall-cmd  --reload
 重启
 systemctl restart firewalld
+
+方式2:放行8080 端口
+	修改配置文件
+		cd /etc/sysconfig
+		vi iptables
+			复制(yy , p)
+				-A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+			改成
+				-A INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+		重启加载防火墙或者重启防火墙
+			service iptables reload
+			或者
+			service iptables restart

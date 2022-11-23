@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 public class test2 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
 
             StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
