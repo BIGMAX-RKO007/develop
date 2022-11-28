@@ -17,6 +17,9 @@ SHOW TABLES;
 -- 查询user表结构
 DESC USER;
 
+-- 查询user表创建语句
+SHOW CREATE TABLE USER ;
+
 /*
 	查询数据表的字符集
 	标准语法：
@@ -61,6 +64,7 @@ DESC product;
 */
 -- 修改product表名为product2
 ALTER TABLE product RENAME TO product2;
+RENAME TABLE  product2 TO product3
 
 
 
