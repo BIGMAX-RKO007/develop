@@ -1,6 +1,6 @@
 /*
 	显示内连接
-	标准语法：
+	标准语法：以下查询语句如需增加筛选条件可以增加 and 关键字 ---and name in (xxx,xxx)  ,and name = xxx or name = xxx
 		SELECT 列名 FROM 表名1 [INNER] JOIN 表名2 ON 关联条件;
 */
 -- 查询用户信息和对应的订单信息

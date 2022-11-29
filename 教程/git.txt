@@ -1,0 +1,2 @@
+git传大文件报错:增加到512MB
+ git config --local http.postBuffer 524288000

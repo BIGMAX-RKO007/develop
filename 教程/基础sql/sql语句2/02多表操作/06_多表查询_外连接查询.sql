@@ -31,3 +31,9 @@ RIGHT OUTER JOIN
 	orderlist o
 ON
 	o.uid=u.id;
+
+/*
+并集连接
+标准语法：union(去重) 和 union all (不去重)
+SELECT 列名 FROM 表名1 RIGHT [OUTER] JOIN 表名2 ON 条件;
+*/

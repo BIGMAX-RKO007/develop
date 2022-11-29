@@ -12,3 +12,8 @@ ALTER TABLE products AUTO_INCREMENT = 101;
 在Mysql中取消外键约束
 SET FOREIGN_KEY_CHECKS=0;
 
+
+	from 后接 WHERE 后接 group by  后接 having 后接 ORDER BY
+	查询表    条件筛选      分组           筛选        排序
+建表前须知:三番式,id(uuid),排序字段,分组字段,函数字段(count.avg.sum...),外键关系,
+
