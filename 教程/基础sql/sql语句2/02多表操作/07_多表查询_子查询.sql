@@ -34,3 +34,26 @@ FROM
 	(SELECT * FROM orderlist WHERE id > 4) o
 WHERE
 	o.uid=u.id;
+
+--not in ( 不在其中)
+--all(比较全部,结果全部大于)与
+--in (在其中)
+--any & some (比较全部,结果部分大于)或
+--exists (where 后接 exists 结果为true 则执行外部sql,提升效率用节省资源)
+select id from dept where id = 1;
+
+select age from emp where dept_id = (select id from dept where id = 1)
+
+select * from emp where age > (select max(age) from emp where dept_id = (select id from dept where id = 1)
+)
+
+select * from emp where age > all (select age from emp where dept_id = (select id from dept where id = 1)
+)
+
+select id from dept
+
+select * from emp where dept_id != all (select id from dept)
+
+select * from emp where dept_id not in (select id from dept)
+
+select * from emp where dept_id in (select id from dept)
