@@ -1,0 +1,22 @@
+报错:fatal: the remote end hung up unexpectedly
+git传大文件报错:增加文件大小(项目总大小)
+ git config --local http.postBuffer 524288000
+ git config --local http.postBuffer 2G
+
+Git 全局设置:
+ git config --global user.name "巨无霸"
+ git config --global user.email "369246926@qq.com"
+创建 git 仓库:
+ mkdir front-end
+ cd front-end
+ git init
+ touch README.md
+ git add README.md
+ git commit -m "first commit"
+ git remote add origin https://gitee.com/big_mac/front-end.git
+ git push -u origin "master"
+
+二次提交:
+    git add *
+    git commit -m "first commit"
+    git push -u origin "master"

@@ -14,6 +14,15 @@ ALTER TABLE products AUTO_INCREMENT = 101;
 在Mysql中取消外键约束
 SET FOREIGN_KEY_CHECKS=0;
 
+select 查询列表（字段）	第七步
+from 表	第一步
+连接类型 join 表2	第二步
+on 连接条件	第三步
+where 筛选条件	第四步
+group by 分组列表	第五步
+having 分组后的筛选条件	第六步
+order by 排序列表	第八步
+limit 偏移 ，条目数	第九步
 
 	from 后接 WHERE 后接 group by  后接 having 后接 ORDER BY
 	查询表    条件筛选      分组           筛选        排序

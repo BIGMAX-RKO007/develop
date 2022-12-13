@@ -1,0 +1,7 @@
+此处下载NVM:nodejs版本切换工具
+https://github.com/coreybutler/nvm-windows/releases
+点击:
+nvm-setup.zip
+安装时体检删除本机nodejs
+体检新建nvm和nodejs文件夹,用于安装
+

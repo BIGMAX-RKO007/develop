@@ -23,3 +23,10 @@ map转json:可以用阿里巴巴json或一下
     //map转成json数据
             ObjectMapper om = new ObjectMapper();
             String json = om.writeValueAsString(map);
+
+<!--        token-->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.4.0</version>
+        </dependency>

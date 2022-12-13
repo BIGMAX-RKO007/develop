@@ -2,6 +2,11 @@ df-h 查看磁盘空间的占用情况，发现磁盘已经占满了，但是在
 
 du -ah --max-depth=1
 
+查看用户:
+/etc/passwd
+清除非root用户密码
+passwd -d 用户
+
 查看服务器配置
 lscpu
 查看当前操作系统内核信息
