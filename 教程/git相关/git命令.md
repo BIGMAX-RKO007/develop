@@ -7,6 +7,9 @@ git clone https://git
 # 添加create_dws.sh文件到git中进行管理
 git add create_dws.sh
 
+# 选中所有文件
+git add *
+
 # 提交文件到本地缓冲区
 git commit -a -m "注释"
 
