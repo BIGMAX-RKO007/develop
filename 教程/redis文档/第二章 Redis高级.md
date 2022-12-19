@@ -407,7 +407,7 @@ slaveof no one
 master客户端发送命令设置密码
 
 ```properties
-config set requirepass password
+config set requirepass 123456
 ```
 
 master配置文件设置密码
@@ -415,6 +415,7 @@ master配置文件设置密码
 ```properties
 config set requirepass password
 config get requirepass
+auth 123456
 ```
 
 slave客户端发送命令设置密码
@@ -896,8 +897,8 @@ sentinel在通知阶段要不断的去获取master/slave的信息，然后在各
 - 优先原则
 
   ​	优先级
-  		offset
-  		runid
+  ​		offset
+  ​		runid
 
 选出新的master之后，发送指令（ sentinel ）给其他的slave：
 

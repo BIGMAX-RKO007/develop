@@ -29,6 +29,9 @@ docker save -o datack.tar data/clickhouse
 然后将导出的镜像文件上传到网络不好的主机上，执行以下命令进行镜像导入，命令如下：
 docker load < coredns.tar
 
+### 查看容器IP:
+docker inspect a4b9e355ffd1
+
 将 docker-compose软件放到/usr/local/bin/ 目录下 执行 chmod +x /usr/local/bin/docker-compose  docker-compose --version
 
 Compose常用命令
@@ -49,6 +52,36 @@ docker-compose stop      # 停止服务
 
 ### 部署docker可视化
 docker run -d -p 8000:8000 -p 9000:9000 --name portainer     --restart=always     -v /var/run/docker.sock:/var/run/docker.sock     -v portainer_data:/data     portainer/portainer
+
+docker run -d -p 8000:8000 -p 9000:9000 --name portainer --restart always -v \\.\pipe\docker_engine:\\.\pipe\docker_engine -v portainer_data:C:\data portainer/portainer
+
+docker run -d --name portainer -p 9000:9000  -v /c/docker/portainer:/var/run/docker.sock portainer/portainer
+
+
+###  Docker运行CentOS
+docker search centos
+docker pull centos7.9.2009
+docker run -itd --privileged centos /usr/sbin/init
+docker attach <container-id>  或  docker exec -it <container-id>  /bin/bash
+安装ssh
+yum install -y openssh-server
+设置密码
+passwd 123456
+systemctl start sshd.service
+systemctl enable sshd.service
+systemctl status sshd.service
+
+制作自己支持ssh的镜像
+docker commit  <container-id> <image-name>
+运行自己的镜像
+docker run -itd --privileged -p 50001:22 cxlt-centos /usr/sbin/init
+ssh root@<本机ip> -p 50001
+
+
+### elasticsearch
+docker run -id -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.8
+docker run -id -e ELASTICSEARCH_HOSTS=http://172.17.0.4:9200 -p 5601:5601 kibana:7.17.8
+
 
 ### 部署Tomcat
 
@@ -187,8 +220,18 @@ docker search redis
 docker pull redis:5.0
 3. 创建容器，设置端口映射
 docker run -id --name=c_redis -p 6379:6379 redis:5.0
-4. 使用外部机器连接redis
+4. 设置密码  --  查看密码
+config set requirepass 123456
+config get requirepass
+5. (error) NOAUTH Authentication required.权限问题
+auth 123456
+config get requirepass
+6. 使用外部机器连接redis
 ./redis-cli.exe -h 192.168.149.135 -p 6379
+
+config set requirepass password
+config get requirepass
+auth 123456
 
 部署minio
 docker pull minio/minio
@@ -196,6 +239,7 @@ docker pull minio/minio
 docker run --name minio -p 9080:9000  -p 9090:9090  -v /install/minio/data:/data -v /install/minio/config:/root/.minio -d --restart=always -e "MINIO_ROOT_USER=adminminio" -e "MINIO_ROOT_PASSWORD=adminminio" minio/minio server /data --console-address ":9090" --address ":9000"
 
 ### 部署clickhouse
+docker run -id -p 8123:8123 yandex/clickhouse-server
 
 mkdir -p /data/clickhouse/data
 mkdir -p /data/clickhouse/conf
