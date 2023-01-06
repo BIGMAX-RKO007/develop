@@ -27,4 +27,4 @@ SELECT CLASS
 SELECT CLASS FROM COURSES GROUP BY CLASS HAVING COUNT(DISTINCT STUDENT) >= 5;
 
 
-
+jdbc:postgresql://localhost:5432/postgres/admin

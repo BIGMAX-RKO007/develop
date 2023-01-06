@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/javaweb/javaweb.iml" filepath="$PROJECT_DIR$/javaweb/javaweb.iml" />
       <module fileurl="file://$PROJECT_DIR$/socketandrabbitmq/socketandrabbitmq.iml" filepath="$PROJECT_DIR$/socketandrabbitmq/socketandrabbitmq.iml" />
     </modules>
   </component>

@@ -18,6 +18,7 @@ docker -v
 docker ps 查看运行的镜像
 docker rm -f 镜像ID 停止镜像
 docker rmi -f 镜像ID 删除镜像
+docker rm $(docker ps -a -q) 删除所有停止的镜像
 docker build -t zdfy_docker:1.0 .     执行dockerfile文件
 
 docker run -d -p 8080:8080 zdfy_docker:1.0
@@ -25,6 +26,7 @@ docker run -d -p 8080:8080 zdfy_docker:1.0
 docker commit -m="描述信息" -a="作者" 容器id 目标镜像名:1.1
 
 我们可以使用 save 和 load 命令，通过镜像id导出镜像到宿主机，命令如下：
+docker save <image_name> -o <output_file>
 docker save -o datack.tar data/clickhouse
 然后将导出的镜像文件上传到网络不好的主机上，执行以下命令进行镜像导入，命令如下：
 docker load < coredns.tar
@@ -56,6 +58,152 @@ docker run -d -p 8000:8000 -p 9000:9000 --name portainer     --restart=always   
 docker run -d -p 8000:8000 -p 9000:9000 --name portainer --restart always -v \\.\pipe\docker_engine:\\.\pipe\docker_engine -v portainer_data:C:\data portainer/portainer
 
 docker run -d --name portainer -p 9000:9000  -v /c/docker/portainer:/var/run/docker.sock portainer/portainer
+
+docker run -d -p 8000:8000 -p 9000:9000 --name portainer --restart always -v \\.\pipe\docker_engine:\\.\pipe\docker_engine -v portainer_data:C:\data portainer/portainer
+
+###  Docker部署前端
+https://blog.csdn.net/qq_21138747/article/details/124334529
+# 第一步
+cd /
+
+# 第二步 创建文件夹
+mkdir frontend-docker
+
+# 第三步
+cd frontend-docker
+
+# 第四步 创建nginx.conf.template并编辑好保存
+vi nginx.conf.template #打开编辑贴上下面的文件内容再按 esc 然后 : wq保存
+
+# 第五步 创建Dockerfile文件并编辑好保存
+vi Dockerfile #打开编辑贴上下面的文件内容再按 esc 然后 : wq保存
+
+# 第五步 上传vue项目build后的dist文件夹
+nginx.conf.template 文件内容
+user nginx;
+
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   /dist;
+			#try_files $uri /index.html; #解决路由重定向跳转 404 页面配置
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    #    listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+}
+Dockerfile文件内容 （业务镜像构建流程）
+FROM nginx:latest
+
+RUN mkdir /dist
+COPY ./dist /dist
+COPY ./nginx.conf.template /
+
+CMD envsubst < /nginx.conf.template > /etc/nginx/nginx.conf \
+	&& cat /etc/nginx/nginx.conf \
+	&& nginx -g 'daemon off;'
+
+
+该文件里主要是安装了nginx，复制dist、nginx.conf.template、启动nginx的步骤
+上面的东西准备好后我们进入上面保存那三个文件的目录frontend-docker
+cd /
+cd frontend-docker
+#已经在frontend-docker目录就不用执行这两条命令
+构建镜像
+docker build -f Dockerfile -t my-frontend:v2.0 .
+#注意最后那个点是必须的，代表当前目录
+
+
+docker run -d --name nginx01 -p 3001:80 --restart=always my-frontend:v2.0
+# -后台运行
+# --name nginx01  设置容器名字叫nginx01
+# -p 3000:80 公网ip的3000端口对应该容器的80端口
+# --restart=always设置了开机自启
+# my-frontend:v1.0 构建的镜像的名字
 
 
 ###  Docker运行CentOS
@@ -104,6 +252,8 @@ tomcat
 
 
 ### 部署PGSQL
+docker run -itd --name=postgres13 -p 5432:5432 -e POSTGRES_PASSWORD=123456 postgres:9.6.24
+
 
 1. 搜索PGsql镜像
 docker search mysql
@@ -229,9 +379,13 @@ config get requirepass
 6. 使用外部机器连接redis
 ./redis-cli.exe -h 192.168.149.135 -p 6379
 
-config set requirepass password
+config set requirepass 123456
 config get requirepass
 auth 123456
+
+docker-compose下设置密码
+    environment:
+      - REDIS_PASSWORD=mypassword
 
 部署minio
 docker pull minio/minio
