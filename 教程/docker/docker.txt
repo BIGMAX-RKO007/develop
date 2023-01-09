@@ -23,7 +23,7 @@ docker build -t zdfy_docker:1.0 .     执行dockerfile文件
 
 docker run -d -p 8080:8080 zdfy_docker:1.0
 
-docker commit -m="描述信息" -a="作者" 容器id 目标镜像名:1.1
+    docker commit -m="描述信息" -a="作者" 容器id 目标镜像名:1.1
 
 我们可以使用 save 和 load 命令，通过镜像id导出镜像到宿主机，命令如下：
 docker save <image_name> -o <output_file>
@@ -53,7 +53,7 @@ docker-compose start     # 启动服务
 docker-compose stop      # 停止服务
 
 ### 部署docker可视化
-docker run -d -p 8000:8000 -p 9000:9000 --name portainer     --restart=always     -v /var/run/docker.sock:/var/run/docker.sock     -v portainer_data:/data     portainer/portainer
+docker run -d -p 8002:8000 -p 9002:9000 --name portainer     --restart=always     -v /var/run/docker.sock:/var/run/docker.sock     -v portainer_data:/data     portainer/portainer
 
 docker run -d -p 8000:8000 -p 9000:9000 --name portainer --restart always -v \\.\pipe\docker_engine:\\.\pipe\docker_engine -v portainer_data:C:\data portainer/portainer
 
@@ -258,7 +258,7 @@ docker run -itd --name=postgres13 -p 5432:5432 -e POSTGRES_PASSWORD=123456 postg
 1. 搜索PGsql镜像
 docker search mysql
 2. 拉取mysql镜像
-docker pull postgres
+docker pull postgres:9.6
 3. 创建容器，设置端口映射、目录映射
 # 在/root目录下创建pgsql目录用于存储pgsql数据信息
 mkdir ~/pgsql
