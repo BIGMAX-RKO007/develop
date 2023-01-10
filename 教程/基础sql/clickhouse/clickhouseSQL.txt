@@ -1,3 +1,5 @@
+不进去程序执行sql脚本
+clickhouse-client --password 123456 --multiquery < /sql/bus.sql
 click house创建数据库
 CREATE DATABASE IF NOT EXISTS tutorial
 创建mysql数据表到clickhouse
