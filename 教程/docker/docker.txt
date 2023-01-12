@@ -1,5 +1,6 @@
-在使用docker容器时，有可能没有安装Vi, 安装Vi:apt-get install vim,如果提示：Unable to locate package vim,则需要敲：apt-get
-update, 等更新完毕以后再敲命令： apt-get install vim
+在使用docker容器时，有可能没有安装Vi, 安装Vi:apt-get install vim,如果提示：Unable to locate package vim,则需要敲：
+
+apt-get update, 等更新完毕以后再敲命令： apt-get install vim
 
 安装:
 # 1、yum 包更新到最新
@@ -23,7 +24,7 @@ docker build -t zdfy_docker:1.0 .     执行dockerfile文件
 
 docker run -d -p 8080:8080 zdfy_docker:1.0
 
-    docker commit -m="描述信息" -a="作者" 容器id 目标镜像名:1.1
+docker commit -m="描述信息" -a="作者" 容器id 目标镜像名:1.1
 
 我们可以使用 save 和 load 命令，通过镜像id导出镜像到宿主机，命令如下：
 docker save <image_name> -o <output_file>

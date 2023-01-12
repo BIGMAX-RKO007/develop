@@ -1,5 +1,14 @@
+docker创建网络
+docker network create -d bridge test-net
+docker network ls
+运行一个容器并连接到新建的 test-net
+docker run -itd --name test1 --network test-net ubuntu /bin/bash
+docker run -itd -p 8082:8000 --network updata_fan_net 7f4f9d13edef /bin/bash
 复制到容器中
 docker cp /tmp/local-file.txt my_container:/app
 docker cp bus.sql c195100b5c27:/sql
 制作镜像
 docker commit -m="sqlck" -a="fx" 容器id 目标镜像名:1.1
+
+docker run -itd -p 3313:80 --network updata_fan_net \
+-v /opt/docker/docker0908/updata/frontend/dist/setting.js:/dist/setting.js 83e847e8cc3d /bin/bash
