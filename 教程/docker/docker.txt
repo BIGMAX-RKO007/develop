@@ -54,13 +54,11 @@ docker-compose start     # 启动服务
 docker-compose stop      # 停止服务
 
 ### 部署docker可视化
+centos7
 docker run -d -p 8002:8000 -p 9002:9000 --name portainer     --restart=always     -v /var/run/docker.sock:/var/run/docker.sock     -v portainer_data:/data     portainer/portainer
-
+windows
 docker run -d -p 8000:8000 -p 9000:9000 --name portainer --restart always -v \\.\pipe\docker_engine:\\.\pipe\docker_engine -v portainer_data:C:\data portainer/portainer
 
-docker run -d --name portainer -p 9000:9000  -v /c/docker/portainer:/var/run/docker.sock portainer/portainer
-
-docker run -d -p 8000:8000 -p 9000:9000 --name portainer --restart always -v \\.\pipe\docker_engine:\\.\pipe\docker_engine -v portainer_data:C:\data portainer/portainer
 
 ###  Docker部署前端
 https://blog.csdn.net/qq_21138747/article/details/124334529
