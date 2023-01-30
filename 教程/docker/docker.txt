@@ -368,7 +368,8 @@ docker search redis
 2. 拉取redis镜像
 docker pull redis:5.0
 3. 创建容器，设置端口映射
-docker run -id --name=c_redis -p 6379:6379 redis:5.0
+docker run -id --name=redis -p 6379:6379 redis
+docker run -id --name=redis -p 6379:6379 redis --requirepass 123456
 4. 设置密码  --  查看密码
 config set requirepass 123456
 config get requirepass
