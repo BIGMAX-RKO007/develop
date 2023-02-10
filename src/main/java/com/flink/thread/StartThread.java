@@ -8,7 +8,9 @@ public class StartThread {
         myThread.start();
         //todo 3: 直接调用run,并非单独启动多线程(单线程)
         myThread.run();
-
+        //todo 4: 提取变量
+        String name = myThread.name;
     }
 
 }
+
