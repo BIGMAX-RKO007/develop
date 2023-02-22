@@ -64,3 +64,13 @@ SELECT 列名1,列名2,... FROM 表名 as A; --as可以省略
 SELECT NAME,IFNULL(stock,0)+10 FROM product as A;
 SELECT A.NAME, B.name FROM product as A user as U;
 SELECT A.NAME,IFNULL(A.stock,0)+10 FROM product A;
+
+UNION操作符
+UNION在进行表链接后会筛选掉重复的记录，所以在表链接后会对所产生的结果集进行排序运算，删除重复的记录再返回结果。
+实际大部分应用中是不会产生重复的记录，最常见的是过程表与历史表UNION。
+如：
+select username,tel from user
+union
+select departmentname from department
+这个SQL在运行时先取出两个表的结果，再用排序空间进行排序删除重复的记录，最后返回结果集，如果表数据量大的话可能会导致用磁盘进行排序。
+推荐方案：采用UNION ALL操作符替代UNION，因为UNION ALL操作只是简单的将两个结果合并后就返回

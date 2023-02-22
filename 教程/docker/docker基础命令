@@ -12,3 +12,18 @@ docker commit -m="sqlck" -a="fx" 容器id 目标镜像名:1.1
 
 docker run -itd -p 3313:80 --network updata_fan_net \
 -v /opt/docker/docker0908/updata/frontend/dist/setting.js:/dist/setting.js 83e847e8cc3d /bin/bash
+# 查看***容器的日志
+docker logs --tail=1000 ***
+# 实时查看更新
+docker logs -f ***
+# 日志保存位置
+/var/lib/docker/containers/容器ID/容器ID-json.log
+# 避免Ctrl + c 退出此容器
+docker attach --sign-proxy=false ***
+备份,导入导出
+# 重命名Docker容器的tag名称，***代表现有名字，###代表新名字
+docker tag *** ###
+# 保存***容器到###.tar中，***容器后面可以跟多个容器
+docker save -o ###.tar ***1 ***2
+# 恢复容器
+docker load --input ***.tar  或者  docker load < ***.tar

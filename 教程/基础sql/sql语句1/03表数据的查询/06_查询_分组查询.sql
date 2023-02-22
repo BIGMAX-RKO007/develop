@@ -20,3 +20,14 @@ WHERE price > 4000
 GROUP BY brand 
 HAVING getSum > 7000 
 ORDER BY getSum DESC;
+
+提高group by语句的效率
+1、反例:先分组，再过滤
+select job, avg（salary） from employee
+group by job
+having job ='develop' or job = 'test';
+2、正例:先过滤，后分组
+select job，avg（salary） from employee
+where job ='develop' or job = 'test'
+group by job;
+理由:可以在执行到该语句前，把不需要的记录过滤掉

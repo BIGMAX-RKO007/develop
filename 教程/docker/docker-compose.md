@@ -82,3 +82,104 @@ docker-compose up
 http://192.168.149.135/hello
 ```
 
+7. 常用Docker Compose+Spring Boot项目
+
+```shell
+version: "3.8"
+
+services:
+    mysql:
+        build:
+            context: ./db
+        container_name: glmx-mysql
+        ports: 
+            - "6001:3306"
+        environment:
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_ROOT_PASSWORD: 123456
+        networks:
+            - glnet
+        restart: always
+        privileged: true
+
+    redis:
+        image: glmx-redis
+        container_name: glmx-redis
+        ports:
+            - "6002:6379"
+        command: ["redis-server","--requirepass 123456","--appendonly yes"]
+        networks:
+            - glnet
+        restart: always
+        privileged: true
+
+    rabbitmq:
+        image: glmx-rabbitmq
+        container_name: glmx-rabbitmq
+        ports:
+            - 6003:5672
+            - 6004:15672
+        networks:
+            - glnet
+        restart: always
+        privileged: true
+    
+
+    nacos:
+        image: glmx-nacos
+        container_name: nacos-nacos
+        environment: 
+            - MODE=standalone
+        ports: 
+            - "6005:8848"
+        networks:
+            - glnet
+        restart: always
+        privileged: true
+
+    nginx:
+        image: glmx-nginx
+        container_name: glmx-nginx
+        ports:
+            - "80:80"
+            - "8080:8080"
+            - "8081:8081"
+            - "6868:6868"
+        volumes:
+            - "D:/Docker/glmx/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf"
+            - "D:/Docker/glmx/nginx/www:/usr/share/nginx/html"
+            - "D:/Docker/glmx/nginx/log:/var/log/nginx"
+        networks:
+            - glnet
+        restart: always
+        privileged: true
+
+    app:
+        image: glmx-app
+        container_name: glmx-app
+        ports:
+            - "24081:24081"
+        volumes:
+            - "D:/Docker/glmx/app:/root/glmx"
+        networks:
+            - glnet
+        links:
+            - mysql
+            - redis
+            - rabbitmq
+            - nacos
+        depends_on:
+            - mysql
+            - redis
+            - rabbitmq
+            - nacos
+            - nginx
+        restart: always
+        privileged: true
+
+networks:
+    glnet:
+        driver: bridge
+
+```
+

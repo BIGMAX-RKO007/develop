@@ -52,3 +52,15 @@ SELECT * FROM product WHERE NAME LIKE '____';
 
 -- 查询名称中包含电脑的商品信息
 SELECT * FROM product WHERE NAME LIKE '%电脑%';
+
+优化like语句
+模糊查询，程序员最喜欢的就是使用like，但是like很可能让你的索引失效。
+首先尽量避免模糊查询，如果必须使用，不采用全模糊查询，也应尽量采用右模糊查询， 即like ‘…%’，是会使用索引的；
+左模糊like ‘%...’无法直接使用索引，但可以利用reverse + function index的形式，变化成 like ‘…%’；
+全模糊查询是无法优化的，一定要使用的话建议使用搜索引擎。
+
+使用合理的分页方式以提高分页的效率
+select id,name from user limit 100000, 20
+使用上述SQL语句做分页的时候，随着表数据量的增加，直接使用limit语句会越来越慢。
+此时，可以通过取前一页的最大ID，以此为起点，再进行limit操作，效率提升显著。
+select id,name from user where id> 100000 limit 20

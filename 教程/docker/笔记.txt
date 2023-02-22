@@ -2,6 +2,11 @@ https://www.yuque.com/leifengyang/oncloud
 百度脑图
 https://www.docker.com
 阿里云加速器:登录阿里
+CentOS下更改docker默认目录
+打开 /etc/docker/daemon.json 输入以下内容（如果没有找到就创建一个）
+{
+    "graph":"/data/docker"
+}
 
 常用密令
 启动docker服务:
