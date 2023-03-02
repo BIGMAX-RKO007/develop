@@ -227,8 +227,10 @@ ssh root@<本机ip> -p 50001
 
 ### elasticsearch
 docker run -id -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.8
-docker run -id -e ELASTICSEARCH_HOSTS=http://172.17.0.4:9200 -p 5601:5601 kibana:7.17.8
 
+docker run -id -e ELASTICSEARCH_HOSTS=http://172.17.0.4:9200 -p 5601:5601 kibana:7.17.8
+只需要在配置文件 kibana.yml 中加入
+i18n.locale: "zh-CN"
 
 ### 部署Tomcat
 

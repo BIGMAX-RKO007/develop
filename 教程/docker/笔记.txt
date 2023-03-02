@@ -6,6 +6,7 @@ CentOS下更改docker默认目录
 打开 /etc/docker/daemon.json 输入以下内容（如果没有找到就创建一个）
 {
     "graph":"/data/docker"
+     "registry-mirrors": ["https://gpqzye7f.mirror.aliyuncs.com"]
 }
 
 常用密令

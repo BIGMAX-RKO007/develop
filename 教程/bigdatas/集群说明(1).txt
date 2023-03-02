@@ -103,14 +103,13 @@ bin/zkCli.sh -server node01:2181
 rmr /brokers/topics/vehicledata-dev
 
 生产数据：
-bin/kafka-console-consumer.sh --bootstrap-server localhost --topic t1703 --from-beginning
 bin/kafka-console-producer.sh --broker-list node1:9092 --topic t1
 ./bin/kafka-console-producer.sh --broker-list 192.168.88.161:9092,192.168.88.162:9092,192.168.88.163:9092 --topic order
 
 消费数据：
 bin/kafka-console-consumer.sh --zookeeper node01:2181 --from-beginning --topic vehicledata-dev
 nohup bin/kafka-console-consumer.sh --zookeeper iienode3:2181 --from-beginning --topic  datalog 2>&1 &
-
+bin/kafka-console-consumer.sh --bootstrap-server localhost --topic t1703 --from-beginning
 
 
 flume启动命令
