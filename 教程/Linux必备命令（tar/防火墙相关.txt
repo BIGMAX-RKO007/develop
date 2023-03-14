@@ -40,3 +40,13 @@ systemctl restart firewalld
 			service iptables reload
 			或者
 			service iptables restart
+
+service firewalld start  #开启
+service firewalld restart #重启
+service firewalld stop #关闭
+firewall-cmd --list-all #查看防火墙规则
+firewall-cmd --query-port=8080/tcp #查询端口是否开放
+firewall-cmd --permanent --add-port=80/tcp #开放80端口
+firewall-cmd --permanent --remove-port=8080/tcp #移除端口
+
+firewall-cmd --reload #重启防火墙（修改配置后要重启防火墙）

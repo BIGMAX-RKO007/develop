@@ -138,3 +138,12 @@ DROP TABLE product2;
 */
 -- 删除product2表，如果存在则删除
 DROP TABLE IF EXISTS product2;
+
+一般情况下，不同的表甚至不同的列都可能需要不同的字符集，可以在创建表的时候指定
+
+CREATE TABLE table_name
+(
+	col_name_1	type,
+	col_name_2	type CHARACTER SET character_name COLLATE collate_name
+)DEFAULT CHARACTER SET character_name
+ COLLATE collate_name;

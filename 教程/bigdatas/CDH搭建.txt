@@ -1,7 +1,17 @@
 /opt/cloudera/parcels/CDH-5.9.2-1.cdh5.9.2.p0.3/lib/zookeeper/bin/zkServer.sh status
-
+cdh前置需要:
+上传离线组件包并给与权限:
+chmod +x -R parcel-repo/
+设置sysctl.conf
+echo 'vm.swappiness=10'>> /etc/sysctl.conf
+systel -p
+时间同步:参考内网时间同步
+systemctl start ntpd
+删除mysql相关
+yum remove mysql-libs
+关闭防火墙:
+systemctl stop firewalld
 1:登录所有机器配置hosts
-
 hostnamectl set-hostname hadoop101
 vim /etc/hosts
 172.16.10.161 hadoop101 hadoop101
@@ -15,7 +25,7 @@ vim /etc/hosts
 2:配置免密登录
 ssh-keygen -t rsa
 ssh-copy-id hadoop1012345678
-3:上传jdk
+3:安装jdk
 查看自带JDK
 rpm -qa | grep java
 卸载自带JDK
@@ -42,26 +52,26 @@ rpm -e --nodeps akonadi-mysql-1.9.2-4.el7.x86_64
 rpm -e --nodeps qt-mysql-4.8.5-13.el7.x86_64
 rpm -e --nodeps perl-DBD-MySQL-4.023-5.el7.x86_64
 rpm -e --nodeps mysql-libs-5.1.73-7.el6.x86_64
+(报错!!!)
+一堆:file /usr/bin/mysql from install of mariadb-1:5.5.41-2.el7_0.x86_64 conflicts with file from package MySQL-client-5.0.96-1.glibc23.x86_64
+yum -y remove mysql-libs*
 yum remove mysql-libs
-
+内网忽略:
+{
 yum install -y libaio
 yum install -y autoconf
-
 wget https://downloads.mysql.com/archives/get/p/23/file/MySQL-shared-compat-5.6.24-1.el6.x86_64.rpm
 wget https://downloads.mysql.com/archives/get/p/23/file/MySQL-shared-5.6.24-1.el6.x86_64.rpm
-
 rpm -ivh MySQL-shared-5.6.24-1.el6.x86_64.rpm
 rpm -ivh MySQL-shared-compat-5.6.24-1.el6.x86_64.rpm
+}
 
 解压mysqllibs
 unzip mysql-libs
 rmp -ivh *.rpm
 查看密码
 cat /root/.mysql_secret
-
-
 service mysql start
-
 mysql登录:
 mysql -uroot -pq3cWLnNBsfrGZmqS
 改密码:SET PASSWORD=PASSWORD('000000');
@@ -69,20 +79,51 @@ mysql -uroot -pq3cWLnNBsfrGZmqS
 use mysql;
 select User, Host, Password from user;
 update user set host='%' where host='localhost';
-
 delete from user where host!='%';
-
 flush privileges;
-
+创建scm用户及权限及数据库
 GRANT ALL ON scm.* TO 'scm'@'%' IDENTIFIED BY 'scm';
 CREATE DATABASE scm DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-#改名字
+#mysql链接
+tar -zxvf mysql-connector-java-5.1.27.tar.gz
 mv mysql-connector-java-5.1.27-bin.jar mysql-connector-java.jar
+分发
+scp -r /usr/share/java/ hadoop102345:/usr/share/
+创建cdhrpm包存放目录
+mkdir /opt/cloudera-manager
+tar -zxvf cm6.3.1-redhat7.tar.gz
+cd cm6.3.1/RPMS/x86_64/
+mv cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm /opt/cloudera-manager/
+mv cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm /opt/cloudera-manager/
+mv cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm /opt/cloudera-manager/
+cd /opt/cloudera-manager/   三个包
+安装cloudera-manager-agent:并每台机器分发
+scp - r /opt/cloudera-manager/ hadoop10123:/opt
+rpm -ivh cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm --nodeps --force
+每台机器设置:
+vim /etc/cloudera-scm-agent/config.ini
+server_host=hadoop101
+安装主节点cloudera-scm-server
+rpm -ivh cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm
+导入数据到server
+mv CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel /opt/cloudera/parcel-repo
+mv CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel.sha1 /opt/cloudera/parcel-repo
+mv manifest.json /opt/cloudera/parcel-repo
+cd /opt/cloudera/parcel-repo
+mv CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel.sha1 CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel.sha
+vim /etc/cloudera-scm-server/db.properties
+com.cloudera.cmf.db.type=mysql
+com.cloudera.cmf.db.host=hadoop101:3306
+com.cloudera.cmf.db.name=scm
+com.cloudera.cmf.db.user=scm
+com.cloudera.cmf.db.password=scm
+com.cloudera.cmf.db.setupType=EXTERNAL
 
-chmod +x -R parcel-repo/
-
-查看实时日志展示：
-tail -f /var/log/.....
+/opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm scm
+systemctl start cloudera-scm-server
+tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log
+三台启动:
+systemctl start cloudera-scm-agent
 
 
 zookeeper报错:
@@ -93,7 +134,7 @@ zookeeper报错:
 解决:
 将每个主机中配置栏搜索"网络接口"  网络接口收集排除正则表达式   ^virbr
 进入各个组件--点击配置--搜索log  :更改日志存储位置(kafka:data)
-
+二次安装kafka:清空kafka日志及数据,清空zookeeper下的brokers/topics/
 
 第15添加cdh节点
 15.1 更新新节点主机名

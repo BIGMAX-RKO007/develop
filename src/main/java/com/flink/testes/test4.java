@@ -10,9 +10,21 @@ import java.util.Random;
 
 public class test4 {
     public static void main(String[] args) throws IOException {
+
+        String AA = "123";
+        String BB = "234";
+        int cc = 123;
+        int dd = 234;
+
+        if (AA == BB ){
+            System.out.println(123);
+        };
+        if (AA .equals(BB)  ){
+            System.out.println(123);
+        }
         //读取空闲的可用端口
         //extracted();
-        System.out.println(getFreePort());
+        //System.out.println(getFreePort());
     }
 
     private static void extracted() throws IOException {
@@ -36,6 +48,7 @@ public class test4 {
             }
         return al;
         }
+
 
     }
 

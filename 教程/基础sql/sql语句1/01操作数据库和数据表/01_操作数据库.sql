@@ -115,3 +115,15 @@ USE db4;
 */
 -- 查询当前正在使用的数据库
 SELECT DATABASE();
+
+查看MySQL所支持的字符集完整列表
+SHOW CHARACTER SET;
+
+查看所支持校对的完整列表
+SHOW COLLATION;
+
+确认系统使用的字符集和校对
+SHOW VARIABLES LIKE 'character%';
+SHOW VARIABLES LIKE 'collation%';
+
+
