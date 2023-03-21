@@ -19,3 +19,22 @@ multi stage build
 docker storage driver: https://docs.docker.com/storage/storagedriver/
 dockerfile best practices: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 multi-stage: https://docs.docker.com/develop/develop-images/multistage-build/
+
+可以使用以下Dockerfile制作MySQL镜像，并执行指定的SQL脚本：
+FROM mysql:latest
+COPY ./init.sql /docker-entrypoint-initdb.d/
+ENV MYSQL_ROOT_PASSWORD=password
+EXPOSE 3306
+其中，init.sql是你要执行的SQL脚本，将其放在docker-entrypoint-initdb.d目录下即可。MYSQL_ROOT_PASSWORD是你设置的MySQL root用户的密码。
+最后，使用以下命令构建并运行容器：
+docker build -t mysql-image .
+docker run -d -p 3306:3306 --name mysql-container mysql-image
+可以使用以下Dockerfile制作tomcat镜像，并执行脚本：
+FROM tomcat:latest
+COPY ./myproject.war /usr/local/tomcat/webapps/
+COPY ./server.xml /usr/local/tomcat/conf/
+EXPOSE 8080
+CMD ["catalina.sh", "run"]
+最后，使用以下命令构建并运行容器：
+docker build -t mysql-image .
+docker run -d -p 3306:3306 --name mysql-container mysql-image
