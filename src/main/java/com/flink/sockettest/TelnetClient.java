@@ -6,7 +6,7 @@ import java.net.*;
 public class TelnetClient {
     public static void main(String[] args) {
         try {
-            Socket socket = new Socket("localhost", 23);
+            Socket socket = new Socket("10.26.52.49", 9092);
             OutputStream os = socket.getOutputStream();
             InputStream is = socket.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));

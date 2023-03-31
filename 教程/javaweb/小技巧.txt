@@ -1,5 +1,5 @@
 测试时候可以使用:
-if(true){return},执行到此将return,不会继续向下执行
+if(true){return null;},执行到此将return,不会继续向下执行
 判断是不是空白:
 StringUtils.isNotBlank
 map转json:可以用阿里巴巴json或一下
