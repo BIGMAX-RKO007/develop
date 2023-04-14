@@ -28,4 +28,26 @@ public class Maputil {
 //    其中，BusGroup是自定义的实体类，包含id、name等属性。在map()操作中，
 //    我们将Map<String, Object>转换成了BusGroup对象，并将其添加到结果集中。
 //    最终通过collect(Collectors.toList())将结果生成List<BusGroup>类型的集合。
+
+//    List<BusGroupDevYs> one = all.stream().filter((BusGroupDevYs) -> {
+//        return BusGroupDevYs.getPid() == 0;
+//    }).map((menu)->{
+//        menu.setChildren(getChildrens(menu,all));
+//        return menu;
+//    }).collect(Collectors.toList());
+//        return one;
+
+
+
+//    private List<BusGroupDevYs> getChildrens(BusGroupDevYs root , List<BusGroupDevYs> all){
+//        List<BusGroupDevYs> Children = all.stream().filter((BusGroupDevYs) -> {
+//
+//            return BusGroupDevYs.getPid() == root.getGroupId();
+//
+//        }).map((BusGroupDevYs)->{
+//            BusGroupDevYs.setChildren(getChildrens(BusGroupDevYs,all));
+//            return BusGroupDevYs;
+//        }).collect(Collectors.toList());
+//        return Children;
+//    }
 }

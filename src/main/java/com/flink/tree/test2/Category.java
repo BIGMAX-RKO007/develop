@@ -1,4 +1,4 @@
-package com.flink.tree;
+package com.flink.tree.test2;
 
 import java.util.ArrayList;
 import java.util.List;

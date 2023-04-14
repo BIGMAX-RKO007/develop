@@ -1,4 +1,7 @@
-package com.flink.tree;
+package com.flink.tree.test2;
+
+import com.flink.tree.test2.Category;
+import com.flink.tree.test2.CategoryTree;
 
 import java.util.ArrayList;
 import java.util.List;
