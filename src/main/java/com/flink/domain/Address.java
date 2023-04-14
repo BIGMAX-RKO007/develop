@@ -14,6 +14,10 @@ public class Address {
         this.city = city;
     }
 
+    public Address() {
+
+    }
+
     public Integer getId() {
         return id;
     }

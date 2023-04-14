@@ -1,5 +1,6 @@
 package com.flink.kafka;
 
+import com.flink.kafka.javakafka.KafkaProducer100Task;
 import com.flink.kafka.javakafka.KafkaProducerTask;
 
 import java.util.concurrent.ExecutorService;
@@ -17,7 +18,7 @@ public class KafkaProducer {
             //用于测试100万条数据量
             executor.execute(new KafkaProducerTask(KAFKA_TOPIC));
             //用于测试100个节点并发量
-            //executor.execute(new KafkaProducer100Task(KAFKA_TOPIC));
+            executor.execute(new KafkaProducer100Task(KAFKA_TOPIC));
         }
         executor.shutdown();
     }

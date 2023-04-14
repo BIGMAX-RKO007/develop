@@ -1,3 +1,7 @@
+tier2.sources = r1
+tier2.sink = k1
+tier2.channels = c1
+
 
 #source
 tier2.sources.r1.type = org.apache.flume.source.kafka.KafkaSource
