@@ -21,7 +21,7 @@ while true; do
         fi
     done <<< "$processes"
     
-    # 每隔一段时间进行检测
+    # 每隔一段时间进行检测  查看该进程PID pgrep -f kills.sh
     sleep 5
 done
 
