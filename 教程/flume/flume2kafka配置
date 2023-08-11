@@ -3,14 +3,13 @@ a1.sources  =  r1
 a1.channels  =  c1
 
 a1.sources.r1.type  = syslogudp
-a1.sources.r1.bind  = 39.96.136.7
+a1.sources.r1.bind  = localhost
 a1.sources.r1.port  = 20181
-a1.sources.r1.max-line-length = 512000
-a1.sources.r1.eventSize = 512000
+
 
 a1.channels.c1.type = org.apache.flume.channel.kafka.KafkaChannel
 a1.channels.c1.kafka.bootstrap.servers = localhost:9092
-a1.channels.c1.kafka.topic = da_warning
+a1.channels.c1.kafka.topic = udp
 a1.channels.c1.parseAsFlumeEvent = false
 a1.channels.c1.kafka.producer.max.request.size = 704857600
 
@@ -161,15 +160,15 @@ a1.sinks = k1
 a1.channels = c1
 
 # Describe/configure the source
-a1.sources.r1.type = netcat
-a1.sources.r1.bind = 192.168.88.161
+a1.sources.r1.type = syslogudp
+a1.sources.r1.bind = localhost
 a1.sources.r1.port = 20181
 a1.sources.r1.max-line-length = 102400
 
 # Describe the sink
 a1.sinks.k1.type = org.apache.flume.sink.kafka.KafkaSink
-a1.sinks.k1.kafka.bootstrap.servers= 192.168.88.161:9092,192.168.88.162:9092,192.168.88.163:9092
-a1.sinks.k1.kafka.topic=pcap
+a1.sinks.k1.kafka.bootstrap.servers= localhost:9092
+a1.sinks.k1.kafka.topic=udp
 a1.sinks.k1.serializer.class=kafka.serializer.StringEncoder
 a1.sinks.k1.kafka.producer.acks=1
 a1.sinks.k1.custom.encoding=UTF-8

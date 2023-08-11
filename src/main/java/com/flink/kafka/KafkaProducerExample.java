@@ -1,4 +1,4 @@
-package com.flink.kafka.javakafka;
+package com.flink.kafka;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;

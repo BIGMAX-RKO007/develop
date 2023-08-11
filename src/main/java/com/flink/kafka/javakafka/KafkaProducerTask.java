@@ -16,9 +16,9 @@ public class KafkaProducerTask implements Runnable {
     @Override
     public void run() {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "192.168.88.161:9092");
-        props.put("bootstrap.servers", "192.168.88.162:9092");
-        props.put("bootstrap.servers", "192.168.88.163:9092");
+        props.put("bootstrap.servers", "hadoop104:9092");
+        props.put("bootstrap.servers", "hadoop105:9092");
+        props.put("bootstrap.servers", "hadoop106:9092");
         props.put("acks", "all");
         props.put("retries", 0);
         props.put("batch.size", 16384);

@@ -4,7 +4,7 @@ cdh前置需要:
 chmod +x -R parcel-repo/
 设置sysctl.conf
 echo 'vm.swappiness=10'>> /etc/sysctl.conf
-systel -p
+sysctl -p
 时间同步:参考内网时间同步
 systemctl start ntpd
 删除mysql相关

@@ -7,7 +7,7 @@ tier2.channels = c1
 tier2.sources.r1.type = org.apache.flume.source.kafka.KafkaSource
 tier2.sources.r1.batchSize = 500
 tier2.sources.r1.batchDurationMillis = 2000
-tier2.sources.r1.kafka.bootstrap.servers = hadoop101:9092,hadoop102:9092,hadoop103:9092
+tier2.sources.r1.kafka.bootstrap.servers = hadoop104:9092,hadoop105:9092,hadoop106:9092
 tier2.sources.r1.kafka.topics = trace
 tier2.sources.r1.kafka.consumer.group.id = trace-consumer1
 #过滤器
