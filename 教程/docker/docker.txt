@@ -35,6 +35,9 @@ docker load < coredns.tar
 ### 查看容器IP:
 docker inspect a4b9e355ffd1
 
+更新容器自动重启
+docker update 容器名称 --restart=always
+
 将 docker-compose软件放到/usr/local/bin/ 目录下 执行 chmod +x /usr/local/bin/docker-compose  docker-compose --version
 
 Compose常用命令
@@ -257,8 +260,8 @@ docker run -itd --name=postgres13 -p 5432:5432 -e POSTGRES_PASSWORD=123456 postg
 
 
 1. 搜索PGsql镜像
-docker search mysql
-2. 拉取mysql镜像
+docker search PGsql
+2. 拉取PGsql镜像
 docker pull postgres:9.6
 3. 创建容器，设置端口映射、目录映射
 # 在/root目录下创建pgsql目录用于存储pgsql数据信息
@@ -289,7 +292,7 @@ docker pull mysql:5.6
 mkdir ~/mysql
 cd ~/mysql
 docker run -id \
--p 3306:3306 \
+-p 3307:3306 \
 --name=me_mysql \
 -v $PWD/conf:/etc/mysql/conf.d \
 -v $PWD/logs:/logs \
@@ -305,6 +308,18 @@ mysql:5.7
 4. 进入容器，操作mysql
 docker exec –it c_mysql /bin/bash
 5. 使用外部机器连接容器中的mysql
+
+8.0版本后需要这些命令:开启密码验证方式,进入容器执行命令即可
+# 修改远程登陆
+# 修改密码过期规则----》永不过期
+ALTER USER 'root'@'%' IDENTIFIED BY '123' PASSWORD EXPIRE NEVER;
+# 更新用户的密码修改加密规则
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123';
+# 刷新权限
+FLUSH PRIVILEGES;
+# 重置密码（==非必须==）
+ALTER USER 'root'@'%' IDENTIFIED BY '123';
+
 
 ### 部署Nginx
 

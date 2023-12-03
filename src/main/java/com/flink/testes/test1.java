@@ -1,6 +1,6 @@
 package com.flink.testes;
 
-import cn.hutool.core.util.IdUtil;
+
 
 import java.util.*;
 
@@ -32,7 +32,10 @@ public class test1 {
         System.out.println(map);
 
 
+        int a = 10;
 
+
+        Integer  aa = 255;
 
 
 
