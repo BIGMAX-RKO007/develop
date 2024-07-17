@@ -1,5 +1,6 @@
 /opt/cloudera/parcels/CDH-5.9.2-1.cdh5.9.2.p0.3/lib/zookeeper/bin/zkServer.sh status
 cdh前置需要:
+请运行“echo never > /sys/kernel/mm/transparent_hugepage/defrag”和“echo never > /sys/kernel/mm/transparent_hugepage/enabled”以禁用此设置
 上传离线组件包并给与权限:
 chmod +x -R parcel-repo/
 设置sysctl.conf
@@ -11,6 +12,9 @@ systemctl start ntpd
 yum remove mysql-libs
 关闭防火墙:
 systemctl stop firewalld
+或只为了开启ssh链接
+firewall-cmd --permanent --add-service=ssh
+firewall-cmd --reload
 1:登录所有机器配置hosts
 hostnamectl set-hostname hadoop101
 vim /etc/hosts
@@ -22,20 +26,37 @@ vim /etc/hosts
 172.16.101.31 hadoop106 hadoop106
 172.16.101.46 hadoop107 hadoop107
 172.16.101.47 hadoop108 hadoop108
+一条命令  ： echo -e "192.168.88.128 hadoop101 hadoop101\n192.168.88.129 hadoop102 hadoop102\n192.168.88.130 hadoop103 hadoop103\n192.168.88.131 hadoop104 hadoop104\n192.168.88.132 hadoop105 hadoop105\n192.168.88.133 hadoop106 hadoop106\n192.168.88.134 hadoop107 hadoop107" | sudo tee -a /etc/hosts
 2:配置免密登录
 ssh-keygen -t rsa
 ssh-copy-id hadoop1012345678
+一条命令：
+for i in {101..107}; do ssh-copy-id hadoop$i; done
+
+for i in {101..107}; do
+    sshpass -p 'your_password' ssh-copy-id -o StrictHostKeyChecking=no hadoop$i
+done  未验证
+
+验证是否生效：current_host=$(hostname); for i in {101..107}; do target="hadoop$i"; [ "$current_host" != "$target" ] && ssh -o BatchMode=yes -o ConnectTimeout=5 $target echo "$current_host to $target OK" || echo "$current_host to $target Failed"; done
+
 3:安装jdk
 查看自带JDK
 rpm -qa | grep java
 卸载自带JDK
+一条命令：rpm -qa | grep -i 'java' | xargs -I {} sh -c 'echo "Removing: {}"; rpm -e --nodeps {}'
 rpm -e --nodeps java-1.8.0-openjdk-1.8.0.102-4.b14.el7.x86_64
 rpm -e --nodeps java-1.8.0-openjdk-headless-1.8.0.102-4.b14.el7.x86_64
 rpm -e --nodeps java-1.7.0-openjdk-headless-1.7.0.111-2.6.7.8.el7.x86_64
 rpm -e --nodeps java-1.7.0-openjdk-1.7.0.111-2.6.7.8.el7.x86_64
+
+在hadoop101的/opt目录下创建module和software文件夹
+mkdir -p /opt/module
+mkdir -p /opt/software
+
+
 cloudera官网的rpm 默认安装
 scp -r oracle-j2sdk1.8-1.8.0+update181-1.x86_64.rpm hadoop102:/$PWD
-安装:rpm -ivh /export/software/oracle-j2sdk1.8-1.8.0+update181-1.x86_64.rpm
+安装:rpm -ivh oracle-j2sdk1.8-1.8.0+update181-1.x86_64.rpm
 4:配置环境变量
 vim /etc/profile
 
@@ -47,6 +68,7 @@ source /etc/profile
 #分发
 scp -r /usr/java/ hadoop102:/usr/
 5:查看mysql安装情况   有则卸载
+一条命令：rpm -qa | grep -i 'mysql' | xargs -I {} sh -c 'echo "Removing: {}"; rpm -e --nodeps {}'
 rpm -qa|grep -i mysql
 rpm -e --nodeps akonadi-mysql-1.9.2-4.el7.x86_64
 rpm -e --nodeps qt-mysql-4.8.5-13.el7.x86_64
@@ -87,6 +109,7 @@ CREATE DATABASE scm DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
 #mysql链接
 tar -zxvf mysql-connector-java-5.1.27.tar.gz
 mv mysql-connector-java-5.1.27-bin.jar mysql-connector-java.jar
+mv mysql-connector-java.jar /usr/share/java/
 分发
 scp -r /usr/share/java/ hadoop102345:/usr/share/
 创建cdhrpm包存放目录
@@ -97,18 +120,23 @@ mv cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm /opt/cloudera-manager/
 mv cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm /opt/cloudera-manager/
 mv cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm /opt/cloudera-manager/
 cd /opt/cloudera-manager/   三个包
-安装cloudera-manager-agent:并每台机器分发
+
+每台机器分发
 scp - r /opt/cloudera-manager/ hadoop10123:/opt
-rpm -ivh cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm --nodeps --force
+
+三个节点安装cloudera-manager-daemons,安装完毕后多出/opt/cloudera目录
+rpm -ivh /opt/cloudera-manager/cloudera-manager-daemons-6.3.1-1466458.el7.x86_64.rpm --nodeps --force
+
+rpm -ivh /opt/cloudera-manager/cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm --nodeps --force
 每台机器设置:
 vim /etc/cloudera-scm-agent/config.ini
 server_host=hadoop101
 安装主节点cloudera-scm-server
-rpm -ivh cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm
+rpm -ivh /opt/cloudera-manager/cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm --nodeps --force
 导入数据到server
-mv CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel /opt/cloudera/parcel-repo
-mv CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel.sha1 /opt/cloudera/parcel-repo
-mv manifest.json /opt/cloudera/parcel-repo
+mv /opt/CDH6/CDH-6.3.2-1* /opt/cloudera/parcel-repo
+
+mv /opt/CDH6/manifest.json /opt/cloudera/parcel-repo
 cd /opt/cloudera/parcel-repo
 mv CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel.sha1 CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel.sha
 vim /etc/cloudera-scm-server/db.properties
