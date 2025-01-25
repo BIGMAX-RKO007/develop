@@ -1,0 +1,27 @@
+事务处理（ACID）
+隔离级别：
+Read Uncommitted（读取未提交）：可能发生脏读。
+Read Committed（读取已提交）：避免脏读。
+Repeatable Read（可重复读）：避免幻读和不可重复读。
+Serializable（可串行化）：最高隔离级别，事务完全串行化执行。
+事务是数据库保证数据一致性的核心，基于 ACID 属性：
+
+A：Atomicity（原子性）——事务的操作要么全部成功，要么全部失败。
+C：Consistency（一致性）——事务执行后，数据库必须处于一致状态。
+I：Isolation（隔离性）——不同事务之间相互隔离，避免相互干扰。
+D：Durability（持久性）——事务提交后，数据永久保存，即使系统崩溃也不丢失。
+MySQL（InnoDB）和 PostgreSQL 都支持事务，但实现机制不同：
+
+MySQL 使用 Redo Log 和 Undo Log 来保证事务的原子性和持久性。
+PostgreSQL 使用 WAL (Write-Ahead Logging) 和 MVCC 实现事务控制和一致性。
+
+并发控制与隔离级别
+数据库需要在多用户并发访问时保持数据一致性，常见并发控制方式：
+
+锁机制（Locking）：
+MySQL 使用行锁（InnoDB），支持共享锁（S锁）和独占锁（X锁）。
+PostgreSQL 偏向轻量化的 MVCC，尽量避免加锁。
+MVCC（多版本并发控制）：
+PostgreSQL 和 MySQL 的 InnoDB 引擎均支持 MVCC，减少锁竞争。
+区别：PostgreSQL 使用“快照隔离”，对每个事务提供一致的视图；MySQL 更依赖锁机制。
+
