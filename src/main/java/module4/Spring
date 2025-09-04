@@ -1,0 +1,17 @@
+对象的创建权转移到了 Spring 框架，这种思想称为 控制反转 Inversion of Control
+* @Controller 加在控制器类上
+* @Service 加在业务逻辑类上
+
+如果是框架帮你找这些依赖对象，按一定规则提供给你，称之为依赖注入
+* @Autowired 根据类型到 Spring 这儿找对象
+
+当控制器处理请求时，会根据一定对应规则，创建 JavaBean 对象
+1. 有无参构造，就根据查询参数名找到对应的 set 方法，如 p=xxx ==> setP(xxx) 来给字段赋值
+2. 只有带参构造，就根据查询参数名匹配构造方法的参数名 如 p=xxx ==> 构造方法(double p, int m, double yr)
+
+======================== Spring =======================
+CalculatorController 对象
+CalculatorService0 对象
+CalculatorService1 对象
+CalculatorService2 对象
+
