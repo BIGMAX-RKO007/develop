@@ -26,7 +26,10 @@ vim /etc/hosts
 172.16.101.31 hadoop106 hadoop106
 172.16.101.46 hadoop107 hadoop107
 172.16.101.47 hadoop108 hadoop108
-一条命令  ： echo -e "192.168.88.128 hadoop101 hadoop101\n192.168.88.129 hadoop102 hadoop102\n192.168.88.130 hadoop103 hadoop103\n192.168.88.131 hadoop104 hadoop104\n192.168.88.132 hadoop105 hadoop105\n192.168.88.133 hadoop106 hadoop106\n192.168.88.134 hadoop107 hadoop107" | sudo tee -a /etc/hosts
+
+
+
+一条命令  ： echo -e "192.168.88.101 hadoop101 hadoop101\n192.168.88.102 hadoop102 hadoop102\n192.168.88.103 hadoop103 hadoop103\n192.168.88.104 hadoop104 hadoop104\n192.168.88.105 hadoop105 hadoop105\n192.168.88.106 hadoop106 hadoop106\n192.168.88.107 hadoop107 hadoop107" | sudo tee -a /etc/hosts
 2:配置免密登录
 ssh-keygen -t rsa
 ssh-copy-id hadoop1012345678

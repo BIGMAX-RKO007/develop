@@ -41,7 +41,7 @@ sudo firewall-cmd --reload
 次节点配置:
 vim /etc/ntp.conf
 #添加主节点到配置文件即可
-server 192.168.88.128
+server 192.168.88.104
 一条命令即可
 sudo sed -i '1i\server 192.168.88.128 prefer' /etc/ntp.conf
 
